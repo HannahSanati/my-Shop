@@ -1,3 +1,5 @@
+import { AttributeType } from "./attribute.model";
+
 export interface Category {
   id: number;
   name: string;
@@ -15,6 +17,13 @@ export interface CategoryDTO {
 export interface CategoryTreeNodeDTO {
   key: string;
   label: string;
-  data: { id: number; description: string };
-  children: CategoryTreeNodeDTO[];
+  data: { id: number; description?: string; };
+  children?: CategoryTreeNodeDTO[];
+}
+
+export interface CategoryAttribute {
+  attributeId: number;
+  name: string;
+  attributeType: AttributeType;
+  required: boolean;
 }
