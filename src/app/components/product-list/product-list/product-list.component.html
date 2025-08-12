@@ -1,0 +1,25 @@
+<h2>لیست کالاها</h2>
+
+<div class="grid">
+  <div *ngFor="let item of listings" class="col-12 md:col-6 lg:col-4">
+    <p-card [header]="item.title" class="mb-3 shadow-2">
+      <ng-template pTemplate="content">
+        <div class="flex flex-column gap-2">
+          <span><strong>قیمت:</strong> {{ item.price | number }} تومان</span>
+          <br>
+          <span>
+            <strong>وضعیت:</strong>
+            <p-tag 
+              [value]="item.condition === 'new' ? 'نو' : 'دست دوم'" 
+              [severity]="item.condition === 'new' ? 'success' : 'warning'">
+            </p-tag>
+          </span>
+          <br>
+          <span *ngIf="item.description">
+            <strong>توضیحات:</strong> {{ item.description }}
+          </span>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+</div>

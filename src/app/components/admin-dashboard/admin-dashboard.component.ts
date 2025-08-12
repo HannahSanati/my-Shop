@@ -2,11 +2,12 @@ import { Component, signal, ViewChild } from '@angular/core';
 import { CategoryTreeComponent } from '../category-tree/category-tree.component';
 import { CategoryFormComponent } from '../category-form/category-form.component';
 import { ProductFormComponent } from '../product/product.component';
+import { ProductListComponent } from "../product-list/product-list/product-list.component";
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CategoryTreeComponent, CategoryFormComponent, ProductFormComponent],
+  imports: [CategoryTreeComponent, CategoryFormComponent, ProductFormComponent, ProductListComponent],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })

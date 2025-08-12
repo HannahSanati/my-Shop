@@ -17,6 +17,7 @@
       placeholder="توضیحات"
     ></textarea>
   </div>
+  
 
   <div class="form-group">
     <label for="price">قیمت</label>
@@ -24,8 +25,6 @@
       id="price"
       formControlName="price"
       mode="decimal"
-      [minFractionDigits]="2"
-      [maxFractionDigits]="2"
     ></p-inputNumber>
     <span class="error" *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid">
       قیمت باید عدد مثبت باشد

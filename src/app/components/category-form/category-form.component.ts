@@ -19,7 +19,7 @@ import { ButtonModule } from 'primeng/button';
     InputTextModule,
     SelectModule,
     CheckboxModule,
-    ButtonModule
+    ButtonModule,
   ],
   templateUrl: './category-form.component.html',
   styleUrls: ['./category-form.component.css']
