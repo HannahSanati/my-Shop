@@ -22,9 +22,12 @@ h2 {
   .listing-item h3 {
     margin-top: 0;
     margin-bottom: 8px;
-    color: #222;
+    color: #3e6bb9;
   }
-  
+  .p-card-body{
+    background: #f9f9f9;
+
+  }
   .listing-item p {
     margin: 4px 0;
     color: #555;
@@ -32,7 +35,7 @@ h2 {
   
   .listing-item p:first-of-type {
     font-weight: 600;
-    color: #000;
+    color: #2d3975;
   }
   
   hr {
