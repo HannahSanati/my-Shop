@@ -1,156 +1,112 @@
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
-  <div class="form-group">
-    <label for="title">عنوان محصول</label>
-    <input
-      pInputText
-      id="title"
-      formControlName="title"
-      placeholder="عنوان محصول"
-    />
-    <span
-      class="error"
-      *ngIf="productForm.get('title')?.touched && productForm.get('title')?.invalid"
-    >
-      عنوان اجباری است
-    </span>
-  </div>
-
-  <div class="form-group">
-    <label for="description">توضیحات</label>
-    <textarea
-      pInputTextarea
-      id="description"
-      formControlName="description"
-      class="form-textarea"
-      placeholder="توضیحات"
-    ></textarea>
-  </div>
-
-  <div class="form-group">
-    <label for="price">قیمت</label>
-    <p-inputNumber
-      id="price"
-      formControlName="price"
-      mode="decimal"
-    ></p-inputNumber>
-    <span
-      class="error"
-      *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid"
-    >
-      قیمت باید عدد مثبت باشد
-    </span>
-  </div>
-
-  <div class="form-group">
-    <label for="stock">موجودی</label>
-    <p-inputNumber
-      id="stock"
-      formControlName="stock"
-      [showButtons]="true"
-      [min]="0"
-    ></p-inputNumber>
-    <span
-      class="error"
-      *ngIf="productForm.get('stock')?.touched && productForm.get('stock')?.invalid"
-    >
-      موجودی باید عدد غیرمنفی باشد
-    </span>
-  </div>
-
-  <div class="form-group">
-    <label for="categoryId">دسته‌بندی</label>
-    <p-select
-      id="categoryId"
-      formControlName="categoryId"
-      [options]="mappedCategories()"
-      optionLabel="name"
-      optionValue="id"
-      placeholder="انتخاب دسته"
-      [showClear]="true"
-    ></p-select>
-    <span
-      class="error"
-      *ngIf="productForm.get('categoryId')?.touched && productForm.get('categoryId')?.invalid"
-    >
-      دسته‌بندی اجباری است
-    </span>
-  </div>
-
- 
-  <div class="form-group" *ngIf="categoryAttributes().length > 0">
-    <label>ویژگی‌های دسته</label>
-    <div *ngFor="let attr of categoryAttributes(); let i = index" class="attribute-input">
-      <label for="attr-{{ i }}">
-        {{ attr.attributeName }} {{ attr.required ? '*' : '' }}
-      </label>
-
-      <ng-container [ngSwitch]="attr.attributeType">
-       
-        <input
-          *ngSwitchCase="'STRING'"
-          pInputText
-          id="attr-{{ i }}"
-          [formControl]="getValueControl(i)"
-          [placeholder]="'مقدار (مثل ' + (attr.attributeName === 'رنگ' ? 'قرمز' : 'متن') + ')'"
-        />
-
-        
-        <p-inputNumber
-          *ngSwitchCase="'NUMBER'"
-          id="attr-{{ i }}"
-          [formControl]="getValueControl(i)"
-          [showButtons]="true"
-          [min]="0"
-          [placeholder]="'مقدار (مثل ' + (attr.attributeName === 'وزن' ? '۱.۵' : 'عدد') + ')'"
-        ></p-inputNumber>
-
-        
-        <div *ngSwitchCase="'BOOLEAN'" class="checkbox-group">
-          <p-checkbox
-            [formControl]="getValueControl(i)"
-            binary="true"
-            inputId="attr-{{ i }}"
-          ></p-checkbox>
-          <label for="attr-{{ i }}">{{ attr.attributeName }}</label>
-        </div>
-
-        
-        <p-select
-          *ngSwitchCase="'SELECT'"
-          id="attr-{{ i }}"
-          [formControl]="getValueControl(i)"
-          [options]="[
-            { label: 'گزینه ۱', value: 'گزینه ۱' },
-            { label: 'گزینه ۲', value: 'گزینه ۲' }
-          ]"
-          placeholder="انتخاب مقدار"
-        ></p-select>
-
-       
-        <p-multiSelect
-          *ngSwitchCase="'MULTISELECT'"
-          id="attr-{{ i }}"
-          [formControl]="getValueControl(i)"
-          [options]="[
-            { label: 'گزینه ۱', value: 'گزینه ۱' },
-            { label: 'گزینه ۲', value: 'گزینه ۲' }
-          ]"
-          placeholder="انتخاب مقادیر"
-          [maxSelectedLabels]="2"
-        ></p-multiSelect>
-      </ng-container>
-
-      <span class="error" *ngIf="getValueControl(i).touched && getValueControl(i).invalid">
-        {{ attr.attributeName }} اجباری است
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
+    <div class="form-group">
+      <label for="title">عنوان محصول</label>
+      <input pInputText id="title" formControlName="title" placeholder="عنوان محصول" />
+      <span class="error" *ngIf="productForm.get('title')?.touched && productForm.get('title')?.invalid">
+        عنوان اجباری است
       </span>
     </div>
-  </div>
 
-  <button
-    pButton
-    type="submit"
-    label="ثبت محصول"
-    class="submit-btn"
-    [disabled]="productForm.invalid"
-  ></button>
-</form>
+    <div class="form-group">
+      <label for="description">توضیحات</label>
+      <textarea
+        pInputTextarea
+        id="description"
+        formControlName="description"
+        class="form-textarea"
+        placeholder="توضیحات"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="price">قیمت</label>
+      <p-inputNumber id="price" formControlName="price" mode="decimal"></p-inputNumber>
+      <span class="error" *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid">
+        قیمت باید عدد مثبت باشد
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="stock">موجودی</label>
+      <p-inputNumber id="stock" formControlName="stock" [showButtons]="true" [min]="0"></p-inputNumber>
+      <span class="error" *ngIf="productForm.get('stock')?.touched && productForm.get('stock')?.invalid">
+        موجودی باید عدد غیرمنفی باشد
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="categoryId">دسته‌بندی</label>
+      <p-select
+        id="categoryId"
+        formControlName="categoryId"
+        [options]="mappedCategories()"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="انتخاب دسته"
+        [showClear]="true"
+      ></p-select>
+      <span class="error" *ngIf="productForm.get('categoryId')?.touched && productForm.get('categoryId')?.invalid">
+        دسته‌بندی اجباری است
+      </span>
+    </div>
+
+    <div class="form-group" *ngIf="categoryAttributes().length">
+      <label>ویژگی‌های دسته</label>
+      <div *ngFor="let attr of categoryAttributes(); let i = index" class="attribute-input">
+        <label for="attr-{{ i }}">{{ attr.attributeName }} {{ attr.required ? '*' : '' }}</label>
+
+        <ng-container [ngSwitch]="attr.attributeType">
+          <input
+            *ngSwitchCase="'STRING'"
+            pInputText
+            id="attr-{{ i }}"
+            [formControl]="getValueControl(i)"
+            [placeholder]="'مقدار (مثل ' + (attr.attributeName === 'رنگ' ? 'قرمز' : 'متن') + ')'"
+          />
+
+          <p-inputNumber
+            *ngSwitchCase="'NUMBER'"
+            id="attr-{{ i }}"
+            [formControl]="getValueControl(i)"
+            [showButtons]="true"
+            [min]="0"
+            [placeholder]="'مقدار (مثل ' + (attr.attributeName === 'وزن' ? '۱.۵' : 'عدد') + ')'"
+          ></p-inputNumber>
+
+          <div *ngSwitchCase="'BOOLEAN'" class="checkbox-group">
+            <p-checkbox [formControl]="getValueControl(i)" binary="true" inputId="attr-{{ i }}"></p-checkbox>
+            <label for="attr-{{ i }}">{{ attr.attributeName }}</label>
+          </div>
+
+          <p-select
+            *ngSwitchCase="'SELECT'"
+            id="attr-{{ i }}"
+            [formControl]="getValueControl(i)"
+            [options]="[{ label: 'گزینه ۱', value: 'گزینه ۱' }, { label: 'گزینه ۲', value: 'گزینه ۲' }]"
+            placeholder="انتخاب مقدار"
+          ></p-select>
+
+          <p-multiSelect
+            *ngSwitchCase="'MULTISELECT'"
+            id="attr-{{ i }}"
+            [formControl]="getValueControl(i)"
+            [options]="[{ label: 'گزینه ۱', value: 'گزینه ۱' }, { label: 'گزینه ۲', value: 'گزینه ۲' }]"
+            placeholder="انتخاب مقادیر"
+            [maxSelectedLabels]="2"
+          ></p-multiSelect>
+        </ng-container>
+
+        <span class="error" *ngIf="getValueControl(i).touched && getValueControl(i).invalid">
+          {{ attr.attributeName }} اجباری است
+        </span>
+      </div>
+    </div>
+
+    <button
+      pButton
+      type="submit"
+      label="ثبت محصول"
+      class="submit-btn"
+      [disabled]="productForm.invalid"
+    ></button>
+  </form>

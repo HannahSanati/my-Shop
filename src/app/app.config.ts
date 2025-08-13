@@ -19,8 +19,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     providePrimeNG({
       theme: {
-          preset: mat
-      }
-  })
+        preset: mat,
+      },
+    }),
   ],
 };

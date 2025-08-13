@@ -1,3 +1,4 @@
+/* ---------- Product Form ---------- */
 :host {
   display: block;
 }
@@ -11,7 +12,7 @@
   border-radius: 1rem;
   border: 1px solid #1d3557;
   color: #1d3557;
-  max-width: 500px;
+  max-width: 600px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -26,7 +27,6 @@
   font-size: 0.875rem;
   font-weight: 500;
   color: #1d3557;
-  margin-bottom: 0.5rem;
 }
 
 .form-group .p-inputtext,

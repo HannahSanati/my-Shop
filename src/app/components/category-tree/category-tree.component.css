@@ -1,49 +1,84 @@
-.tree-container {
-  background: #457b9d;
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-  border: 1px solid #1d3557;
+/* ---------- Category Form ---------- */
+:host {
+  display: block;
 }
 
-.node-content {
+.form-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem;
-  background: #a8dadc;
-  border-radius: 0.5rem;
-  transition: background 0.3s ease, transform 0.3s ease;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #457b9d, #a8dadc);
+  border-radius: 1rem;
+  border: 1px solid #1d3557;
+  color: #1d3557;
+  max-width: 500px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.node-content:hover {
-  background: #1d3557;
-  color: #f1faee;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-.node-content span {
-  font-size: 1rem;
+.form-group label {
+  font-size: 0.875rem;
   font-weight: 500;
   color: #1d3557;
 }
 
-.node-content:hover span {
+.form-group .p-inputtext,
+.form-group .p-dropdown,
+.form-group textarea {
+  padding: 0.75rem;
+  border: 1px solid #1d3557;
+  border-radius: 0.5rem;
+  background: #f1faee;
+  color: #1d3557;
+  font-size: 1rem;
+  font-family: 'iran_yekan', sans-serif;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+  width: 100%;
+}
+
+.form-group .p-inputtext.p-invalid {
+  border-color: #e63946;
+  box-shadow: 0 0 0 2px #f8a5a9;
+}
+
+.error {
+  color: #e63946;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #1d3557, #457b9d);
   color: #f1faee;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.node-actions {
-  display: flex;
-  gap: 0.75rem;
+.submit-btn:disabled {
+  background: #6b7280;
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.edit-btn, .delete-btn {
-  font-size: 1.1rem;
-  padding: 0.25rem;
-}
-
-.node-content:hover .edit-btn {
-  color: #f1faee !important;
-}
-
-.node-content:hover .delete-btn {
-  color: #e63946 !important;
+.submit-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2b4a7a, #5b9bd5);
+  transform: scale(1.05);
 }

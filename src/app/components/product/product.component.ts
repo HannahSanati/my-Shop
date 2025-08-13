@@ -29,6 +29,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { Card } from "primeng/card";
 
 @Component({
   selector: 'app-product-form',
@@ -42,7 +43,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
     ButtonModule,
     InputNumberModule,
     MultiSelectModule,
-  ],
+    Card
+],
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
 })
@@ -153,75 +155,64 @@ export class ProductFormComponent implements OnInit, OnChanges {
     }
     return control as FormControl;
   }
-  onSubmit() {
-    if (!this.productForm.valid) {
-      alert('لطفا فرم را کامل و صحیح پر کنید.');
-      return;
-    }
-  
-    const attributes = this.attributeValuesFormArray.value.map(
-      (val: any, i: number) => {
-        const type = this.categoryAttributes()[i].attributeType;
-        let value = val.value;
-  
-        switch (type) {
-          case AttributeType.NUMBER:
-            value = Number(value);
-            break;
-          case AttributeType.BOOLEAN:
-            value = Boolean(value);
-            break;
-          case AttributeType.MULTISELECT:
-            value = Array.isArray(value) ? value.join(',') : '';
-            break;
-          default:
-            value = value != null ? value.toString() : '';
-        }
-  
-        return {
-          attributeId: val.attributeId,
-          value,
-        };
-      }
-    );
-  
-    const productDTO: ProductDTO = {
-      title: this.productForm.get('title')?.value,
-      description: this.productForm.get('description')?.value,
-      price: Number(this.productForm.get('price')?.value),
-      stock: Number(this.productForm.get('stock')?.value),
-      categoryId: this.productForm.get('categoryId')?.value,
-      attributeValues: attributes,
-    };
-  
-    console.log('JSON to send:', JSON.stringify(productDTO));
-  
-    this.productService.addProduct(productDTO).subscribe({
-      next: () => {
-        console.log('Product added successfully');
-        this.productForm.reset();
-        this.categoryAttributes.set([]);
-        this.attributeValuesFormArray.clear();
-        this.productAdded.emit();
-      },
-      error: (err) => {
-        console.error('Error adding product:', err);
-        alert('خطا در ثبت محصول. لطفا دوباره تلاش کنید.');
-      },
-    });
+
+
+
+onSubmit() {
+  if (!this.productForm.valid) {
+    alert('لطفا فرم را کامل و صحیح پر کنید.');
+    return;
   }
-  
+  const attributes = this.attributeValuesFormArray.value.map((val: any, i: number) => {
+    const attr = this.categoryAttributes()[i];
+    let value: any = val.value;
+
+    switch (attr.attributeType) {
+      case AttributeType.NUMBER:
+        value = value !== null && value !== undefined ? Number(value) : 0;
+        break;
+      case AttributeType.BOOLEAN:
+        value = Boolean(value);
+        break;
+      case AttributeType.MULTISELECT:
+        value = Array.isArray(value) ? value.join(',') : '';
+        break;
+      case AttributeType.SELECT:
+        value = value != null ? value.toString() : '';
+        break;
+      default: 
+        value = value != null ? value.toString() : '';
+    }
+
+    return {
+      attributeId: attr.attributeId,
+      value,
+    };
+  });
+
+
+  const productDTO: ProductDTO = {
+    title: this.productForm.get('title')?.value?.toString() || '',
+    description: this.productForm.get('description')?.value?.toString() || '',
+    price: Number(this.productForm.get('price')?.value) || 0,
+    stock: Number(this.productForm.get('stock')?.value) || 0,
+    categoryId: Number(this.productForm.get('categoryId')?.value),
+    attributeValues: attributes,
+  };
+  console.log('Payload to send:', JSON.stringify(productDTO, null, 2));
+
+  this.productService.addProduct(productDTO).subscribe({
+    next: () => {
+      console.log('Product added successfully');
+      this.productForm.reset();
+      this.categoryAttributes.set([]);
+      this.attributeValuesFormArray.clear();
+      this.productAdded.emit();
+    },
+    error: (err) => {
+      console.error('Error adding product:', err);
+      alert('خطا در ثبت محصول. لطفا دوباره تلاش کنید.');
+    },
+  });
 }
-      
-/////////debuging🤓
-    //   this.productService.addProduct(productDTO).subscribe(() => {
-    //     this.productForm.reset();
-    //     this.categoryAttributes.set([]);
-    //     this.attributeValuesFormArray.clear();
-    //     this.productAdded.emit();
-    //   });
-
-
-    // } else {
-    //   alert('لطفا فرم را کامل و صحیح پر کنید.');
-    // }
+}
