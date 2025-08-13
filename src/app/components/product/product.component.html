@@ -76,7 +76,7 @@
     </span>
   </div>
 
-  <!-- Dynamic Category Attributes -->
+ 
   <div class="form-group" *ngIf="categoryAttributes().length > 0">
     <label>ویژگی‌های دسته</label>
     <div *ngFor="let attr of categoryAttributes(); let i = index" class="attribute-input">
@@ -85,7 +85,7 @@
       </label>
 
       <ng-container [ngSwitch]="attr.attributeType">
-        <!-- STRING -->
+       
         <input
           *ngSwitchCase="'STRING'"
           pInputText
@@ -94,7 +94,7 @@
           [placeholder]="'مقدار (مثل ' + (attr.attributeName === 'رنگ' ? 'قرمز' : 'متن') + ')'"
         />
 
-        <!-- NUMBER -->
+        
         <p-inputNumber
           *ngSwitchCase="'NUMBER'"
           id="attr-{{ i }}"
@@ -104,7 +104,7 @@
           [placeholder]="'مقدار (مثل ' + (attr.attributeName === 'وزن' ? '۱.۵' : 'عدد') + ')'"
         ></p-inputNumber>
 
-        <!-- BOOLEAN -->
+        
         <div *ngSwitchCase="'BOOLEAN'" class="checkbox-group">
           <p-checkbox
             [formControl]="getValueControl(i)"
@@ -114,7 +114,7 @@
           <label for="attr-{{ i }}">{{ attr.attributeName }}</label>
         </div>
 
-        <!-- SELECT -->
+        
         <p-select
           *ngSwitchCase="'SELECT'"
           id="attr-{{ i }}"
@@ -126,7 +126,7 @@
           placeholder="انتخاب مقدار"
         ></p-select>
 
-        <!-- MULTISELECT -->
+       
         <p-multiSelect
           *ngSwitchCase="'MULTISELECT'"
           id="attr-{{ i }}"

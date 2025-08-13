@@ -18,10 +18,11 @@ interface Listing {
   selector: 'app-product-list',
   imports: [CommonModule, CardModule, ButtonModule, TagModule],
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']})
-
+  styleUrls: ['./product-list.component.css']
+})
 export class ProductListComponent implements OnInit {
   listings: Product[] = [];
+  idx: number | undefined;
 
   constructor(private productService: ProductService) {}
 
@@ -37,6 +38,18 @@ export class ProductListComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error loading products:', err);
+      }
+    });
+  }
+
+  deleteProduct(productId: number, index: number) {
+    this.productService.deleteProduct(productId).subscribe({
+      next: () => {
+        this.listings.splice(index, 1);
+        console.log('Product deleted:', productId);
+      },
+      error: (err) => {
+        console.error('Failed to delete product:', err);
       }
     });
   }

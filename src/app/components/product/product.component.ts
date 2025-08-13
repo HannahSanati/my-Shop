@@ -46,6 +46,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
 })
+
+
 export class ProductFormComponent implements OnInit, OnChanges {
   productForm!: FormGroup;
 
@@ -108,7 +110,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
   get attributeValuesFormArray(): FormArray {
     return this.productForm.get('attributeValues') as FormArray;
   }
-  
+
   loadAttributes(categoryId: number) {
     this.attributeService.getCategoryAttributes(categoryId).subscribe({
       next: (attrs) => {
@@ -152,31 +154,74 @@ export class ProductFormComponent implements OnInit, OnChanges {
     return control as FormControl;
   }
   onSubmit() {
-    if (this.productForm.valid) {
-      const productDTO: ProductDTO = {
-        title: this.productForm.get('title')?.value,
-        description: this.productForm.get('description')?.value,
-        price: Number(this.productForm.get('price')?.value),
-        stock: this.productForm.get('stock')?.value,
-        categoryId: this.productForm.get('categoryId')?.value,
-        attributeValues: this.attributeValuesFormArray.value.map(
-          (val: any) => ({
-            attributeId: val.attributeId,
-            value: Array.isArray(val.value)
-              ? val.value.join(',')
-              : val.value.toString(),
-          })
-        ),
-      };
-
-      this.productService.addProduct(productDTO).subscribe(() => {
+    if (!this.productForm.valid) {
+      alert('لطفا فرم را کامل و صحیح پر کنید.');
+      return;
+    }
+  
+    const attributes = this.attributeValuesFormArray.value.map(
+      (val: any, i: number) => {
+        const type = this.categoryAttributes()[i].attributeType;
+        let value = val.value;
+  
+        switch (type) {
+          case AttributeType.NUMBER:
+            value = Number(value);
+            break;
+          case AttributeType.BOOLEAN:
+            value = Boolean(value);
+            break;
+          case AttributeType.MULTISELECT:
+            value = Array.isArray(value) ? value.join(',') : '';
+            break;
+          default:
+            value = value != null ? value.toString() : '';
+        }
+  
+        return {
+          attributeId: val.attributeId,
+          value,
+        };
+      }
+    );
+  
+    const productDTO: ProductDTO = {
+      title: this.productForm.get('title')?.value,
+      description: this.productForm.get('description')?.value,
+      price: Number(this.productForm.get('price')?.value),
+      stock: Number(this.productForm.get('stock')?.value),
+      categoryId: this.productForm.get('categoryId')?.value,
+      attributeValues: attributes,
+    };
+  
+    console.log('JSON to send:', JSON.stringify(productDTO));
+  
+    this.productService.addProduct(productDTO).subscribe({
+      next: () => {
+        console.log('Product added successfully');
         this.productForm.reset();
         this.categoryAttributes.set([]);
         this.attributeValuesFormArray.clear();
-        this.productAdded.emit(); //
-      });
-    } else {
-      alert('لطفا فرم را کامل و صحیح پر کنید.');
-    }
+        this.productAdded.emit();
+      },
+      error: (err) => {
+        console.error('Error adding product:', err);
+        alert('خطا در ثبت محصول. لطفا دوباره تلاش کنید.');
+      },
+    });
   }
+  
 }
+      
+/////////debuging🤓
+    //   this.productService.addProduct(productDTO).subscribe(() => {
+    //     this.productForm.reset();
+    //     this.categoryAttributes.set([]);
+    //     this.attributeValuesFormArray.clear();
+    //     this.productAdded.emit();
+    //   });
+
+
+    // } else {
+    //   alert('لطفا فرم را کامل و صحیح پر کنید.');
+    // }

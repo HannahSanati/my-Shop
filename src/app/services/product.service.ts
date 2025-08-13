@@ -27,4 +27,8 @@ export class ProductService {
   getProductAttributes(productId: number): Observable<ProductAttributeValue[]> {
     return this.http.get<ProductAttributeValue[]>(`${this.productAttributeApiUrl}?productId=${productId}`);
   }
+  deleteProduct(productId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${productId}`);
+  }
+  
 }
