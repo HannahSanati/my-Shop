@@ -1,8 +1,16 @@
 <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
   <div class="form-group">
     <label for="title">عنوان محصول</label>
-    <input pInputText id="title" formControlName="title" placeholder="عنوان محصول" />
-    <span class="error" *ngIf="productForm.get('title')?.touched && productForm.get('title')?.invalid">
+    <input
+      pInputText
+      id="title"
+      formControlName="title"
+      placeholder="عنوان محصول"
+    />
+    <span
+      class="error"
+      *ngIf="productForm.get('title')?.touched && productForm.get('title')?.invalid"
+    >
       عنوان اجباری است
     </span>
   </div>
@@ -17,7 +25,6 @@
       placeholder="توضیحات"
     ></textarea>
   </div>
-  
 
   <div class="form-group">
     <label for="price">قیمت</label>
@@ -26,15 +33,26 @@
       formControlName="price"
       mode="decimal"
     ></p-inputNumber>
-    <span class="error" *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid">
+    <span
+      class="error"
+      *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid"
+    >
       قیمت باید عدد مثبت باشد
     </span>
   </div>
 
   <div class="form-group">
     <label for="stock">موجودی</label>
-    <p-inputNumber id="stock" formControlName="stock" [showButtons]="true" [min]="0"></p-inputNumber>
-    <span class="error" *ngIf="productForm.get('stock')?.touched && productForm.get('stock')?.invalid">
+    <p-inputNumber
+      id="stock"
+      formControlName="stock"
+      [showButtons]="true"
+      [min]="0"
+    ></p-inputNumber>
+    <span
+      class="error"
+      *ngIf="productForm.get('stock')?.touched && productForm.get('stock')?.invalid"
+    >
       موجودی باید عدد غیرمنفی باشد
     </span>
   </div>
@@ -42,27 +60,32 @@
   <div class="form-group">
     <label for="categoryId">دسته‌بندی</label>
     <p-select
-  id="categoryId"
-  formControlName="categoryId"
-  [options]="mappedCategories()"
-  optionLabel="name"
-  optionValue="id"
-  placeholder="انتخاب دسته"
-  [showClear]="true"
-></p-select>
-
-  
-    <span class="error" *ngIf="productForm.get('categoryId')?.touched && productForm.get('categoryId')?.invalid">
+      id="categoryId"
+      formControlName="categoryId"
+      [options]="mappedCategories()"
+      optionLabel="name"
+      optionValue="id"
+      placeholder="انتخاب دسته"
+      [showClear]="true"
+    ></p-select>
+    <span
+      class="error"
+      *ngIf="productForm.get('categoryId')?.touched && productForm.get('categoryId')?.invalid"
+    >
       دسته‌بندی اجباری است
     </span>
   </div>
 
-  <div class="form-group" *ngIf="categoryAttributes().length">
+  <!-- Dynamic Category Attributes -->
+  <div class="form-group" *ngIf="categoryAttributes().length > 0">
     <label>ویژگی‌های دسته</label>
     <div *ngFor="let attr of categoryAttributes(); let i = index" class="attribute-input">
-      <label for="attr-{{ i }}">{{ attr.attributeName }} {{ attr.required ? '*' : '' }}</label>
+      <label for="attr-{{ i }}">
+        {{ attr.attributeName }} {{ attr.required ? '*' : '' }}
+      </label>
 
       <ng-container [ngSwitch]="attr.attributeType">
+        <!-- STRING -->
         <input
           *ngSwitchCase="'STRING'"
           pInputText
@@ -71,6 +94,7 @@
           [placeholder]="'مقدار (مثل ' + (attr.attributeName === 'رنگ' ? 'قرمز' : 'متن') + ')'"
         />
 
+        <!-- NUMBER -->
         <p-inputNumber
           *ngSwitchCase="'NUMBER'"
           id="attr-{{ i }}"
@@ -80,24 +104,37 @@
           [placeholder]="'مقدار (مثل ' + (attr.attributeName === 'وزن' ? '۱.۵' : 'عدد') + ')'"
         ></p-inputNumber>
 
+        <!-- BOOLEAN -->
         <div *ngSwitchCase="'BOOLEAN'" class="checkbox-group">
-          <p-checkbox [formControl]="getValueControl(i)" binary="true" inputId="attr-{{ i }}"></p-checkbox>
+          <p-checkbox
+            [formControl]="getValueControl(i)"
+            binary="true"
+            inputId="attr-{{ i }}"
+          ></p-checkbox>
           <label for="attr-{{ i }}">{{ attr.attributeName }}</label>
         </div>
 
+        <!-- SELECT -->
         <p-select
           *ngSwitchCase="'SELECT'"
           id="attr-{{ i }}"
           [formControl]="getValueControl(i)"
-          [options]="[{ label: 'گزینه ۱', value: 'گزینه ۱' }, { label: 'گزینه ۲', value: 'گزینه ۲' }]"
+          [options]="[
+            { label: 'گزینه ۱', value: 'گزینه ۱' },
+            { label: 'گزینه ۲', value: 'گزینه ۲' }
+          ]"
           placeholder="انتخاب مقدار"
         ></p-select>
 
+        <!-- MULTISELECT -->
         <p-multiSelect
           *ngSwitchCase="'MULTISELECT'"
           id="attr-{{ i }}"
           [formControl]="getValueControl(i)"
-          [options]="[{ label: 'گزینه ۱', value: 'گزینه ۱' }, { label: 'گزینه ۲', value: 'گزینه ۲' }]"
+          [options]="[
+            { label: 'گزینه ۱', value: 'گزینه ۱' },
+            { label: 'گزینه ۲', value: 'گزینه ۲' }
+          ]"
           placeholder="انتخاب مقادیر"
           [maxSelectedLabels]="2"
         ></p-multiSelect>

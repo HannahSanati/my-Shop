@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
+import { ProductService } from '../../../services/product.service';
+import { Product } from '../../../models/product.model';
 
 interface Listing {
   id: number;
@@ -18,10 +20,24 @@ interface Listing {
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']})
 
-export class ProductListComponent {
-  listings: Listing[] = [
-    { id: 1, title: 'آیفون ۱۵', price: 90000000, condition: 'new', description: 'جدید و آکبند' },
-    { id: 2, title: 'موبایل سامسونگ', price: 75000000, condition: 'used', description: 'دست دوم و سالم' },
-    { id: 3, title: 'آب معدنی', price: 15000, condition: 'new', description: 'بطری 1.5 لیتری' },
-  ];
+export class ProductListComponent implements OnInit {
+  listings: Product[] = [];
+
+  constructor(private productService: ProductService) {}
+
+  ngOnInit() {
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.productService.getProducts().subscribe({
+      next: (products) => {
+        this.listings = products;
+        console.log('Products loaded:', products);
+      },
+      error: (err) => {
+        console.error('Error loading products:', err);
+      }
+    });
+  }
 }

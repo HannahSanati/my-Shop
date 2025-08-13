@@ -1,9 +1,33 @@
-import { Component, signal, input, output, OnInit, inject, effect, SimpleChanges, OnChanges } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  Component,
+  signal,
+  input,
+  output,
+  OnInit,
+  inject,
+  effect,
+  SimpleChanges,
+  OnChanges,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
 import { AttributeService } from '../../services/attribute.service';
-import { Category, CategoryDTO, CategoryTreeNodeDTO } from '../../models/category.model';
-import { Attribute, CategoryAttribute, CategoryAttributeDTO, AttributeType } from '../../models/attribute.model';
+import {
+  Category,
+  CategoryDTO,
+  CategoryTreeNodeDTO,
+} from '../../models/category.model';
+import {
+  Attribute,
+  CategoryAttribute,
+  CategoryAttributeDTO,
+  AttributeType,
+} from '../../models/attribute.model';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
@@ -22,19 +46,19 @@ import { ButtonModule } from 'primeng/button';
     ButtonModule,
   ],
   templateUrl: './category-form.component.html',
-  styleUrls: ['./category-form.component.css']
+  styleUrls: ['./category-form.component.css'],
 })
 export class CategoryFormComponent implements OnInit, OnChanges {
   categoryId = input<number | null>(null);
   categoryUpdated = output<void>();
   categoryForm!: FormGroup;
-  categories = signal<{ label: string, value: number | null }[]>([]);
+  categories = signal<{ label: string; value: number | null }[]>([]);
   attributeTypes = signal([
     { label: 'رشته', value: AttributeType.STRING },
     { label: 'عدد', value: AttributeType.NUMBER },
     { label: 'بولی', value: AttributeType.BOOLEAN },
     { label: 'انتخابی', value: AttributeType.SELECT },
-    { label: 'چند انتخابی', value: AttributeType.MULTISELECT }
+    { label: 'چند انتخابی', value: AttributeType.MULTISELECT },
   ]);
   categoryAttributes = signal<CategoryAttribute[]>([]);
   editMode = signal(false);
@@ -48,13 +72,11 @@ export class CategoryFormComponent implements OnInit, OnChanges {
       parentId: [null],
       attributeName: [''],
       attributeType: [null],
-      required: [false]
+      required: [false],
     });
     effect(() => {
       this.loadCategories();
     });
-
-    
   }
 
   ngOnInit() {
@@ -77,13 +99,13 @@ export class CategoryFormComponent implements OnInit, OnChanges {
         const flatCategories = this.flattenCategories(cats);
         this.categories.set([
           { label: 'بدون والد', value: null },
-          ...flatCategories.map(cat => ({ label: cat.name, value: cat.id }))
+          ...flatCategories.map((cat) => ({ label: cat.name, value: cat.id })),
         ]);
       },
       error: (err) => {
         console.error('خطا در لود دسته‌بندی‌ها:', err);
         alert('خطایی در لود دسته‌بندی‌ها رخ داد.');
-      }
+      },
     });
   }
 
@@ -94,13 +116,13 @@ export class CategoryFormComponent implements OnInit, OnChanges {
         this.categoryForm.patchValue({
           name: category.name,
           description: category.description,
-          parentId: category.parentId
+          parentId: category.parentId,
         });
       },
       error: (err) => {
         console.error('خطا در لود دسته‌بندی:', err);
         alert('خطایی در لود دسته‌بندی رخ داد.');
-      }
+      },
     });
     this.attributeService.getCategoryAttributes(this.categoryId()!).subscribe({
       next: (attrs) => {
@@ -109,23 +131,22 @@ export class CategoryFormComponent implements OnInit, OnChanges {
       error: (err) => {
         console.error('خطا در لود ویژگی‌های دسته‌بندی:', err);
         alert('خطایی در لود ویژگی‌های دسته‌بندی رخ داد.');
-      }
+      },
     });
   }
 
-
   private flattenCategories(nodes: CategoryTreeNodeDTO[]): Category[] {
-  return nodes.flatMap(node => [
-    {
-      id: node.data.id,
-      name: node.label, 
-      description: node.data.description,
-      parentId: null, 
-      children: []
-    },
-    ...this.flattenCategories(node.children || [])
-  ]);
-}
+    return nodes.flatMap((node) => [
+      {
+        id: node.data.id,
+        name: node.label,
+        description: node.data.description,
+        parentId: null,
+        children: [],
+      },
+      ...this.flattenCategories(node.children || []),
+    ]);
+  }
 
   addAttribute() {
     const attributeName = this.categoryForm.get('attributeName')?.value;
@@ -138,7 +159,7 @@ export class CategoryFormComponent implements OnInit, OnChanges {
     const newAttribute: Attribute = {
       id: 0,
       name: attributeName,
-      type: attributeType
+      type: attributeType,
     };
     this.attributeService.addAttribute(newAttribute).subscribe({
       next: (addedAttribute) => {
@@ -147,15 +168,19 @@ export class CategoryFormComponent implements OnInit, OnChanges {
           attributeId: addedAttribute.id,
           attributeName: attributeName,
           attributeType: attributeType,
-          required: required
+          required: required,
         };
-        this.categoryAttributes.update(attrs => [...attrs, newCatAttr]);
-        this.categoryForm.patchValue({ attributeName: '', attributeType: null, required: false });
+        this.categoryAttributes.update((attrs) => [...attrs, newCatAttr]);
+        this.categoryForm.patchValue({
+          attributeName: '',
+          attributeType: null,
+          required: false,
+        });
       },
       error: (err) => {
         console.error('خطا در افزودن ویژگی:', err);
         alert('خطایی در افزودن ویژگی رخ داد.');
-      }
+      },
     });
   }
 
@@ -164,84 +189,99 @@ export class CategoryFormComponent implements OnInit, OnChanges {
     if (attr.id) {
       this.attributeService.deleteCategoryAttribute(attr.id).subscribe({
         next: () => {
-          this.categoryAttributes.update(attrs => attrs.filter((_, i) => i !== index));
+          this.categoryAttributes.update((attrs) =>
+            attrs.filter((_, i) => i !== index)
+          );
         },
         error: (err) => {
           console.error('خطا در حذف ویژگی دسته‌بندی:', err);
           alert('خطایی در حذف ویژگی رخ داد.');
-        }
+        },
       });
     } else {
-      this.categoryAttributes.update(attrs => attrs.filter((_, i) => i !== index));
+      this.categoryAttributes.update((attrs) =>
+        attrs.filter((_, i) => i !== index)
+      );
     }
   }
-  
+
   onSubmit() {
     if (this.categoryForm.valid) {
-        const attributeName = this.categoryForm.get('attributeName')?.value;
-        const attributeType = this.categoryForm.get('attributeType')?.value;
-        if (attributeName || attributeType) {
-            alert('ویژگی جدید وارد شده اما اضافه نشده است. لطفاً ابتدا ویژگی را اضافه کنید.');
-            return;
-        }
-        if (this.categoryAttributes().length === 0) {
-            alert('حداقل یک ویژگی اضافه کنید.');
-            return;
-        }
-        const categoryDTO: CategoryDTO = {
-            name: this.categoryForm.get('name')?.value,
-            description: this.categoryForm.get('description')?.value,
-            parentId: this.categoryForm.get('parentId')?.value
-        };
+      const attributeName = this.categoryForm.get('attributeName')?.value;
+      const attributeType = this.categoryForm.get('attributeType')?.value;
+      if (attributeName || attributeType) {
+        alert(
+          'ویژگی جدید وارد شده اما اضافه نشده است. لطفاً ابتدا ویژگی را اضافه کنید.'
+        );
+        return;
+      }
+      if (this.categoryAttributes().length === 0) {
+        alert('حداقل یک ویژگی اضافه کنید.');
+        return;
+      }
+      const categoryDTO: CategoryDTO = {
+        name: this.categoryForm.get('name')?.value,
+        description: this.categoryForm.get('description')?.value,
+        parentId: this.categoryForm.get('parentId')?.value,
+      };
 
-        const categoryRequest = this.editMode()
-            ? this.categoryService.updateCategory(this.categoryId()!, categoryDTO)
-            : this.categoryService.addCategory(categoryDTO);
+      const categoryRequest = this.editMode()
+        ? this.categoryService.updateCategory(this.categoryId()!, categoryDTO)
+        : this.categoryService.addCategory(categoryDTO);
 
-        categoryRequest.subscribe({
-            next: (category) => {
-                console.log('پاسخ سرور:', category); // لاگ برای دیباگ
-                const categoryId = category.id;
-                if (!categoryId) {
-                    console.error('categoryId null است:', category);
-                    alert('خطا: شناسه دسته‌بندی معتبر نیست.');
-                    return;
-                }
-                this.categoryAttributes().forEach(attr => {
-                    if (!attr.id) {
-                        const categoryAttributeDTO: CategoryAttributeDTO = {
-                            categoryId,
-                            attributeId: attr.attributeId,
-                            required: attr.required
-                        };
-                        if (!categoryAttributeDTO.categoryId || !categoryAttributeDTO.attributeId) {
-                            console.error('DTO ناقص است:', categoryAttributeDTO);
-                            return;
-                        }
-                        this.attributeService.addCategoryAttribute(categoryAttributeDTO).subscribe({
-                            next: (newCatAttr) => {
-                                this.categoryAttributes.update(attrs =>
-                                    attrs.map(a => (a.attributeId === attr.attributeId && !a.id ? { ...a, id: newCatAttr.id } : a))
-                                );
-                            },
-                            error: (err) => {
-                                console.error('خطا در افزودن ویژگی دسته‌بندی:', err);
-                                alert('خطایی در افزودن ویژگی رخ داد.');
-                            }
-                        });
-                    }
+      categoryRequest.subscribe({
+        next: (category) => {
+          console.log('پاسخ سرور:', category); // لاگ برای دیباگ
+          const categoryId = category.id;
+          if (!categoryId) {
+            console.error('categoryId null است:', category);
+            alert('خطا: شناسه دسته‌بندی معتبر نیست.');
+            return;
+          }
+          this.categoryAttributes().forEach((attr) => {
+            if (!attr.id) {
+              const categoryAttributeDTO: CategoryAttributeDTO = {
+                categoryId,
+                attributeId: attr.attributeId,
+                required: attr.required,
+              };
+              if (
+                !categoryAttributeDTO.categoryId ||
+                !categoryAttributeDTO.attributeId
+              ) {
+                console.error('DTO ناقص است:', categoryAttributeDTO);
+                return;
+              }
+              this.attributeService
+                .addCategoryAttribute(categoryAttributeDTO)
+                .subscribe({
+                  next: (newCatAttr) => {
+                    this.categoryAttributes.update((attrs) =>
+                      attrs.map((a) =>
+                        a.attributeId === attr.attributeId && !a.id
+                          ? { ...a, id: newCatAttr.id }
+                          : a
+                      )
+                    );
+                  },
+                  error: (err) => {
+                    console.error('خطا در افزودن ویژگی دسته‌بندی:', err);
+                    alert('خطایی در افزودن ویژگی رخ داد.');
+                  },
                 });
-                this.categoryUpdated.emit();
-                this.loadCategories();
-                this.categoryForm.reset();
-                this.categoryAttributes.set([]);
-                this.editMode.set(false);
-            },
-            error: (err) => {
-                console.error('خطا در ذخیره دسته‌بندی:', err);
-                alert('خطایی در ذخیره دسته‌بندی رخ داد.');
             }
-        });
+          });
+          this.categoryUpdated.emit();
+          this.loadCategories();
+          this.categoryForm.reset();
+          this.categoryAttributes.set([]);
+          this.editMode.set(false);
+        },
+        error: (err) => {
+          console.error('خطا در ذخیره دسته‌بندی:', err);
+          alert('خطایی در ذخیره دسته‌بندی رخ داد.');
+        },
+      });
     }
-}
+  }
 }

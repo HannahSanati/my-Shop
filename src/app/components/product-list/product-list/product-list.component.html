@@ -10,8 +10,8 @@
           <span>
             <strong>وضعیت:</strong>
             <p-tag 
-              [value]="item.condition === 'new' ? 'نو' : 'دست دوم'" 
-              [severity]="item.condition === 'new' ? 'success' : 'warning'">
+              [value]="(item.stock && item.stock > 0) ? 'نو' : 'دست دوم'" 
+              [severity]="(item.stock && item.stock > 0) ? 'success' : 'warning'">
             </p-tag>
           </span>
           <br>

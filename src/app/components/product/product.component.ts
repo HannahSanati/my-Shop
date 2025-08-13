@@ -5,6 +5,8 @@ import {
   Input,
   SimpleChanges,
   OnChanges,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -48,12 +50,14 @@ export class ProductFormComponent implements OnInit, OnChanges {
   productForm!: FormGroup;
 
   categories = signal<CategoryTreeNodeDTO[]>([]);
-  mappedCategories = signal<{ id: number; name: string }[]>([]);  // <-- Added
+  mappedCategories = signal<{ id: number; name: string }[]>([]); // <-- Added
 
   categoryAttributes = signal<CategoryAttribute[]>([]);
   attributeTypes = signal(Object.values(AttributeType));
 
   @Input() categoryId!: number | null;
+
+  @Output() productAdded = new EventEmitter<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -75,7 +79,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
     this.categoryService.getCategories().subscribe((cats) => {
       this.categories.set(cats);
       this.mappedCategories.set(
-        cats.map(cat => ({ id: cat.data.id, name: cat.label }))
+        cats.map((cat) => ({ id: cat.data.id, name: cat.label }))
       );
     });
 
@@ -101,10 +105,10 @@ export class ProductFormComponent implements OnInit, OnChanges {
     }
   }
 
-  get attributeValuesFormArray() {
+  get attributeValuesFormArray(): FormArray {
     return this.productForm.get('attributeValues') as FormArray;
   }
-
+  
   loadAttributes(categoryId: number) {
     this.attributeService.getCategoryAttributes(categoryId).subscribe({
       next: (attrs) => {
@@ -123,7 +127,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
   updateAttributeValuesFormArray(attributes: CategoryAttribute[]) {
     this.attributeValuesFormArray.clear();
     attributes.forEach((attr) => {
-      const validator = attr.required ? Validators.required : null;
+      const validator = attr.required ? [Validators.required] : [];
       this.attributeValuesFormArray.push(
         this.fb.group({
           attributeId: [attr.attributeId],
@@ -147,14 +151,12 @@ export class ProductFormComponent implements OnInit, OnChanges {
     }
     return control as FormControl;
   }
-
   onSubmit() {
     if (this.productForm.valid) {
       const productDTO: ProductDTO = {
         title: this.productForm.get('title')?.value,
         description: this.productForm.get('description')?.value,
-        price:Number(this.productForm.get('price')?.value),
-        //////
+        price: Number(this.productForm.get('price')?.value),
         stock: this.productForm.get('stock')?.value,
         categoryId: this.productForm.get('categoryId')?.value,
         attributeValues: this.attributeValuesFormArray.value.map(
@@ -166,10 +168,12 @@ export class ProductFormComponent implements OnInit, OnChanges {
           })
         ),
       };
+
       this.productService.addProduct(productDTO).subscribe(() => {
         this.productForm.reset();
         this.categoryAttributes.set([]);
         this.attributeValuesFormArray.clear();
+        this.productAdded.emit(); //
       });
     } else {
       alert('لطفا فرم را کامل و صحیح پر کنید.');

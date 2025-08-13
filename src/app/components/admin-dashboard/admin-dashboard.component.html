@@ -11,11 +11,11 @@
     </div>
         <div class="card">
       <h2>مدیریت محصولات</h2>
-      <app-product-form [categoryId]="selectedCategoryId()"></app-product-form>
+      <app-product-form (productAdded)="productList.loadProducts()" [categoryId]="selectedCategoryId()"></app-product-form>
     </div>
     <div class="card">
       <h2>محصولات</h2>
-      <app-product-list />
+      <app-product-list #productList></app-product-list>
     </div>
   </div>
 </div>

@@ -1,5 +1,7 @@
 <!-- category-form.component.html (اصلاح برای p-select attributeType با label/value) -->
 <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="form-container">
+  <div>Attributes count: {{ categoryAttributes().length }}</div>
+
   <div class="form-group">
     <label for="name">نام دسته</label>
     <input pInputText id="name" formControlName="name" placeholder="نام دسته" />
@@ -31,7 +33,7 @@
         optionValue="value"
         placeholder="نوع ویژگی"
       />
-      <p-checkbox formControlName="required" label="اجباری" binary="true"></p-checkbox>
+      <!-- <p-checkbox formControlName="required" label="اجباری" binary="true"></p-checkbox> -->
       <button pButton type="button" label="اضافه کردن ویژگی" class="add-attribute-btn" (click)="addAttribute()"></button>
     </div>
   </div>
