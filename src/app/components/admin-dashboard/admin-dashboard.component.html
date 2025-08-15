@@ -1,25 +1,8 @@
-<div class="dashboard">
-  <h1>پنل مدیریت فروشگاه</h1>
-  <div class="dashboard-grid">
-    <div class="card">
-      <h2>درخت دسته‌بندی</h2>
-      <app-category-tree (nodeSelected)="onCategorySelected($event)" />
-    </div>
-    <div class="card">
-      <h2>مدیریت دسته‌بندی</h2>
-      <app-category-form [categoryId]="selectedCategoryId()" (categoryUpdated)="onCategoryUpdated()" />
-    </div>
-        <div class="card">
-      <h2>مدیریت محصولات</h2>
-      <app-product-form (productAdded)="productList.loadProducts()" [categoryId]="selectedCategoryId()"></app-product-form>
-    </div>
-    <div class="card">
-      <h2>محصولات</h2>
-      <app-product-list #productList></app-product-list>
-    </div>
+<div class="dashboard-grid">
+  <div class="card" (click)="navigateTo('category-layout')">
+    <h2>مدیریت دسته‌بندی</h2>
+  </div>
+  <div class="card" (click)="navigateTo('product-layout')">
+    <h2>مدیریت محصولات</h2>
   </div>
 </div>
-
-
-
-

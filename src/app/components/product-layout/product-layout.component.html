@@ -1,0 +1,17 @@
+<div class="product-layout">
+    <div class="left">
+      <!-- If you have a category tree here, bind it similarly -->
+      <app-category-tree (nodeSelected)="handleCategorySelected($event)"></app-category-tree>
+    </div>
+    <div class="right">
+      <!-- Product form receives selectedCategoryId safely -->
+      <app-product-form
+        [categoryId]="selectedCategoryId"
+        (productAdded)="onProductAdded()"
+      ></app-product-form>
+  
+      <!-- Product list can also be here if needed -->
+      <app-product-list #productList></app-product-list>
+    </div>
+  </div>
+  

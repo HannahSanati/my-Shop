@@ -1,0 +1,13 @@
+<div class="category-layout">
+    <div class="left">
+      <app-category-tree (nodeSelected)="onCategorySelected($event!)"></app-category-tree>
+    </div>
+  
+    <div class="right">
+      <app-category-form
+        [categoryId]="selectedCategoryId"
+        (categoryUpdated)="onCategoryUpdated()">
+      </app-category-form>
+    </div>
+  </div>
+  
