@@ -1,8 +1,17 @@
-<div class="dashboard-grid">
-  <div class="card" (click)="navigateTo('category-layout')">
-    <h2>مدیریت دسته‌بندی</h2>
-  </div>
-  <div class="card" (click)="navigateTo('product-layout')">
-    <h2>مدیریت محصولات</h2>
+<div class="dashboard">
+  <h1>پنل مدیریت</h1>
+
+  <div class="dashboard-grid">
+    <p-card class="card" (click)="navigateTo('category-layout')">
+      <ng-template pTemplate="title">
+        مدیریت دسته‌بندی
+      </ng-template>
+    </p-card>
+
+    <p-card class="card" (click)="navigateTo('product-layout')">
+      <ng-template pTemplate="title">
+        مدیریت محصولات
+      </ng-template>
+    </p-card>
   </div>
 </div>

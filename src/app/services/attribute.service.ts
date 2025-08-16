@@ -7,8 +7,8 @@ import { Attribute, CategoryAttribute, CategoryAttributeDTO, AttributeType } fro
   providedIn: 'root'
 })
 export class AttributeService {
-  private apiUrl = 'http://192.168.113.143:8080/api/attributes';
-  private categoryAttributeApiUrl = 'http://192.168.113.143:8080/api/category-attributes';
+  private apiUrl = 'http://192.168.225.143:8080/api/attributes';
+  private categoryAttributeApiUrl = 'http://192.168.225.143:8080/api/category-attributes';
   private http = inject(HttpClient);
 
   getAttributes(): Observable<Attribute[]> {

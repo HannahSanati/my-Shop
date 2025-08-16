@@ -42,8 +42,7 @@ import { Card } from "primeng/card";
     CheckboxModule,
     ButtonModule,
     InputNumberModule,
-    MultiSelectModule,
-    Card
+    MultiSelectModule
 ],
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],

@@ -8,8 +8,8 @@ import { Product, ProductDTO, ProductAttributeValue, ProductAttributeValueDTO } 
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://192.168.113.143:8080/api/products';
-  private productAttributeApiUrl = 'http://192.168.113.143:8080/api/product-attributes';
+  private apiUrl = 'http://192.168.225.143:8080/api/products';
+  private productAttributeApiUrl = 'http://192.168.225.143:8080/api/product-attributes';
   private http = inject(HttpClient);
 
   getProducts(): Observable<Product[]> {

@@ -1,4 +1,4 @@
-<div class="tree-container">
+<!-- <div class="tree-container">
   <p-tree
     [value]="categories()"
     (onNodeSelect)="selectNode($event)"
@@ -10,6 +10,24 @@
         <div class="node-actions">
           <button pButton type="button" icon="pi pi-pencil" class="edit-btn" (click)="selectNode({ node })"></button>
           <button pButton type="button" icon="pi pi-trash" class="p-button-danger delete-btn" (click)="deleteCategory(+node.key)"></button>
+        </div>
+      </div>
+    </ng-template>
+  </p-tree>
+</div> -->
+
+<div class="tree-container">
+  <p-tree
+    [value]="categories()"
+    (onNodeSelect)="selectNode($event)"
+    selectionMode="single"
+  >
+    <ng-template let-node pTemplate="default">
+      <div class="node-content">
+        <span>{{ node.label }}</span>
+        <div class="node-actions">
+          <button pButton type="button" icon="pi pi-pencil" class="edit-btn" (click)="selectNode({ node })"></button>
+          <button pButton type="button" icon="pi pi-trash" class="delete-btn" (click)="deleteCategory(+node.key)"></button>
         </div>
       </div>
     </ng-template>

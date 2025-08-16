@@ -7,8 +7,8 @@ import { Category, CategoryDTO, CategoryTreeNodeDTO } from '../models/category.m
   providedIn: 'root'
 })
 export class CategoryService {
-  private apiUrl = 'http://192.168.113.143:8080/api/categories';
-  private treeApiUrl = 'http://192.168.113.143:8080/api/categories/tree';
+  private apiUrl = 'http://192.168.225.143:8080/api/categories';
+  private treeApiUrl = 'http://192.168.225.143:8080/api/categories/tree';
   private http = inject(HttpClient);
 
   getCategories(): Observable<CategoryTreeNodeDTO[]> {

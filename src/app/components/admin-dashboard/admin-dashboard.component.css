@@ -21,6 +21,9 @@ h1 {
   gap: 2.5rem;
 }
 
+
+/* make it responsive
+switch at 1024px, also handle tablet screens: */
 @media (min-width: 1024px) {
   .dashboard-grid {
     grid-template-columns: 1fr 1fr;
@@ -28,19 +31,16 @@ h1 {
 }
 
 .card {
-  background: linear-gradient(135deg, #457b9d, #a8dadc);
-  padding: 2.5rem;
-  border-radius: 1.25rem;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  border: 1px solid #1d3557;
-  color: #1d3557;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer; 
+  transform: translateY(0);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transform: translateY(-8px) scale(1.02);
 }
+
+
 
 .card h2 {
   font-size: 1.75rem;
