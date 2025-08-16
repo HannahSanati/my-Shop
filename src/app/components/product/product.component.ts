@@ -29,7 +29,9 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { Card } from "primeng/card";
+import { TreeSelectModule } from 'primeng/treeselect';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ChipsModule } from 'primeng/chips';
 
 @Component({
   selector: 'app-product-form',
@@ -42,24 +44,22 @@ import { Card } from "primeng/card";
     CheckboxModule,
     ButtonModule,
     InputNumberModule,
-    MultiSelectModule
-],
+    MultiSelectModule,
+    TreeSelectModule,
+    AutoCompleteModule,
+    ChipsModule,
+  ],
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
 })
-
-
 export class ProductFormComponent implements OnInit, OnChanges {
   productForm!: FormGroup;
 
-  categories = signal<CategoryTreeNodeDTO[]>([]);
-  mappedCategories = signal<{ id: number; name: string }[]>([]); // <-- Added
-
+  treeCategories: any[] = [];  
   categoryAttributes = signal<CategoryAttribute[]>([]);
   attributeTypes = signal(Object.values(AttributeType));
 
   @Input() categoryId!: number | null;
-
   @Output() productAdded = new EventEmitter<void>();
 
   constructor(
@@ -80,31 +80,30 @@ export class ProductFormComponent implements OnInit, OnChanges {
     });
 
     this.categoryService.getCategories().subscribe((cats) => {
-      this.categories.set(cats);
-      this.mappedCategories.set(
-        cats.map((cat) => ({ id: cat.data.id, name: cat.label }))
-      );
+      this.treeCategories = this.mapToTreeNodes(cats);
     });
-
-    this.productForm.get('categoryId')?.valueChanges.subscribe((categoryId) => {
-      if (categoryId) {
-        this.loadAttributes(categoryId);
-      } else {
-        this.categoryAttributes.set([]);
-        this.attributeValuesFormArray.clear();
-      }
-    });
-
-    if (this.categoryId) {
-      this.productForm.patchValue({ categoryId: this.categoryId });
-      this.loadAttributes(this.categoryId);
-    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['categoryId'] && this.categoryId) {
       this.productForm.patchValue({ categoryId: this.categoryId });
       this.loadAttributes(this.categoryId);
+    }
+  }
+
+  mapToTreeNodes(categories: CategoryTreeNodeDTO[]): any[] {
+    return categories.map((cat) => ({
+      label: cat.label,
+      data: { id: cat.data.id },
+      children: cat.children ? this.mapToTreeNodes(cat.children) : [],
+    }));
+  }
+
+  onCategorySelect(event: any) {
+    const categoryId = event.node?.data?.id;
+    if (categoryId) {
+      this.productForm.patchValue({ categoryId });
+      this.loadAttributes(categoryId);
     }
   }
 
@@ -155,63 +154,66 @@ export class ProductFormComponent implements OnInit, OnChanges {
     return control as FormControl;
   }
 
-
-
-onSubmit() {
-  if (!this.productForm.valid) {
-    alert('لطفا فرم را کامل و صحیح پر کنید.');
-    return;
-  }
-  const attributes = this.attributeValuesFormArray.value.map((val: any, i: number) => {
-    const attr = this.categoryAttributes()[i];
-    let value: any = val.value;
-
-    switch (attr.attributeType) {
-      case AttributeType.NUMBER:
-        value = value !== null && value !== undefined ? Number(value) : 0;
-        break;
-      case AttributeType.BOOLEAN:
-        value = Boolean(value);
-        break;
-      case AttributeType.MULTISELECT:
-        value = Array.isArray(value) ? value.join(',') : '';
-        break;
-      case AttributeType.SELECT:
-        value = value != null ? value.toString() : '';
-        break;
-      default: 
-        value = value != null ? value.toString() : '';
+  onSubmit() {
+    console.log("worked!");
+    if (!this.productForm.valid) {
+      console.warn("Form invalid:", this.productForm.value);
+      alert('لطفا فرم را کامل و صحیح پر کنید.');
+      return;
     }
 
-    return {
-      attributeId: attr.attributeId,
-      value,
+    const attributes = this.attributeValuesFormArray.value.map(
+      (val: any, i: number) => {
+        const attr = this.categoryAttributes()[i];
+        let value: any = val.value;
+
+        switch (attr.attributeType) {
+          case AttributeType.NUMBER:
+            value = value !== null && value !== undefined ? Number(value) : 0;
+            break;
+          case AttributeType.BOOLEAN:
+            value = Boolean(value);
+            break;
+          case AttributeType.MULTISELECT:
+            value = Array.isArray(value) ? value : [];
+            break;
+          case AttributeType.SELECT:
+            value = value != null ? value.toString() : '';
+            break;
+          default:
+            value = value != null ? value.toString() : '';
+        }
+
+        return {
+          attributeId: attr.attributeId,
+          value,
+        };
+      }
+    );
+
+    const productDTO: ProductDTO = {
+      title: this.productForm.get('title')?.value?.toString() || '',
+      description: this.productForm.get('description')?.value?.toString() || '',
+      price: Number(this.productForm.get('price')?.value) || 0,
+      stock: Number(this.productForm.get('stock')?.value) || 0,
+      categoryId: Number(this.productForm.get('categoryId')?.value),
+      attributeValues: attributes,
     };
-  });
 
+    console.log('Payload to send:', JSON.stringify(productDTO, null, 2));
 
-  const productDTO: ProductDTO = {
-    title: this.productForm.get('title')?.value?.toString() || '',
-    description: this.productForm.get('description')?.value?.toString() || '',
-    price: Number(this.productForm.get('price')?.value) || 0,
-    stock: Number(this.productForm.get('stock')?.value) || 0,
-    categoryId: Number(this.productForm.get('categoryId')?.value),
-    attributeValues: attributes,
-  };
-  console.log('Payload to send:', JSON.stringify(productDTO, null, 2));
-
-  this.productService.addProduct(productDTO).subscribe({
-    next: () => {
-      console.log('Product added successfully');
-      this.productForm.reset();
-      this.categoryAttributes.set([]);
-      this.attributeValuesFormArray.clear();
-      this.productAdded.emit();
-    },
-    error: (err) => {
-      console.error('Error adding product:', err);
-      alert('خطا در ثبت محصول. لطفا دوباره تلاش کنید.');
-    },
-  });
-}
+    this.productService.addProduct(productDTO).subscribe({
+      next: () => {
+        console.log('Product added successfully');
+        this.productForm.reset();
+        this.categoryAttributes.set([]);
+        this.attributeValuesFormArray.clear();
+        this.productAdded.emit();
+      },
+      error: (err) => {
+        console.error('Error adding product:', err);
+        alert('خطا در ثبت محصول. لطفا دوباره تلاش کنید.');
+      },
+    });
+  }
 }

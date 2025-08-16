@@ -17,8 +17,9 @@ export class ProductService {
   }
 
   addProduct(product: ProductDTO): Observable<Product> {
+    console.log("Sending to backend", product)
     return this.http.post<Product>(this.apiUrl, product);
-  }
+  }  
 
   addProductAttribute(productAttribute: ProductAttributeValueDTO): Observable<ProductAttributeValue> {
     return this.http.post<ProductAttributeValue>(this.productAttributeApiUrl, productAttribute);
