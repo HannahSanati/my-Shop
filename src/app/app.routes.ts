@@ -4,8 +4,14 @@ export const routes: Routes = [
   // default
   {
     path: '',
-    redirectTo: '/admin',
+    redirectTo: '/home',
     pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./components/home/home.component')
+        .then(c => c.HomeComponent),
   },
   {
     path: 'admin',
@@ -14,23 +20,27 @@ export const routes: Routes = [
         .then(c => c.AdminDashboardComponent),
   },
   {
-    path: 'category-layout',
+    path: 'add-category',
     loadComponent: () =>
-      import('./components/category-layout/category-layout.component')
-        .then(c => c.CategoryLayoutComponent),
+      import('./components/category-form/category-form.component')
+        .then(c => c.CategoryFormComponent),
   },
   {
-    path: 'product-layout',
+    path: 'categories',
     loadComponent: () =>
-      import('./components/product-layout/product-layout.component')
-        .then(c => c.ProductLayoutComponent),
+    import('./components/category-tree/category-tree.component')
+        .then(c => c.CategoryTreeComponent),
+  },
+  {
+    path: 'add-product',
+    loadComponent: () =>
+      import('./components/product/product.component')
+        .then(c => c.ProductFormComponent),
+  },
+  {
+    path: 'product-list',
+    loadComponent: () =>
+      import('./components/product-list/product-list/product-list.component')
+        .then(c => c.ProductListComponent),
   },
 ];
-
-// {
-//   path:'test',
-//   loadComponent: () =>
-//     import('./testprimeng/testprimeng.component')
-//      .then(c => c.TestprimengComponent)
-// }
-

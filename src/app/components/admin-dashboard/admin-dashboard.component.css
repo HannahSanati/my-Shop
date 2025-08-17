@@ -4,47 +4,70 @@
   background: linear-gradient(135deg, #1d3557, #457b9d);
   font-family: 'iran_yekan', sans-serif;
   color: #f1faee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-h1 {
-  font-size: 2.75rem;
-  font-weight: 800;
+.dashboard h1 {
+  font-size: 3rem;
+  font-weight: 900;
   text-align: center;
   margin-bottom: 3rem;
   color: #f1faee;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
 .dashboard-grid {
+  width: 100%;
+  max-width: 1200px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.5rem;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
-
-/* make it responsive
-switch at 1024px, also handle tablet screens: */
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .dashboard-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 .card {
-  cursor: pointer; 
-  transform: translateY(0);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: #f1faee;
+  border-radius: 1rem;
+  padding: 2rem;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #1d3557;
 }
 
 .card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
-
-
 
 .card h2 {
   font-size: 1.75rem;
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 1.5rem;
   color: #1d3557;
+  user-select: none;
+}
+
+.card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #457b9d;
 }

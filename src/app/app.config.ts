@@ -9,7 +9,7 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { providePrimeNG } from 'primeng/config';
-import mat from '@primeng/themes/lara';
+import Aura from '@primeng/themes/aura';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     providePrimeNG({
       theme: {
-        preset: mat,
+        preset: Aura,
       },
     }),
   ],

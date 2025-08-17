@@ -1,0 +1,88 @@
+/* Toolbar container styling */
+p-toolbar {
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  border-radius: 3rem !important; /* keep your rounded corners */
+  padding: 1rem 1rem 1rem 1.5rem !important;
+  direction: rtl; /* for right-to-left languages like Persian */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: sans-serif;
+}
+
+/* Start section flex container */
+p-toolbar >>> ng-template[start] > div.flex {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* End section flex container */
+p-toolbar >>> ng-template[end] > div.flex {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* SVG icon styling */
+p-toolbar svg {
+  width: 2rem !important;
+  height: 2rem !important;
+  margin-left: 1rem; /* since direction is rtl, margin-left pushes icon away */
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+p-toolbar svg:hover {
+  transform: scale(1.1);
+  fill: var(--p-primary-color);
+}
+
+/* PrimeNG buttons styling */
+p-toolbar p-button {
+  font-weight: 600;
+  color: #333;
+  border-radius: 1.5rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 0.5rem 1rem;
+  min-width: 140px;
+}
+
+/* Text buttons */
+p-toolbar p-button[text] {
+  color: var(--p-primary-color);
+}
+
+p-toolbar p-button[text]:hover {
+    background-color: transparent;
+    color: var(--p-primary-color);
+    box-shadow: none;
+    text-decoration: underline; 
+  }
+
+/* Contrast button (for account button) */
+p-toolbar p-button[severity="contrast"] {
+    background-color: transparent;
+    color: var(--p-primary-color);
+}
+
+p-toolbar p-button[severity="contrast"]:hover {
+  background-color: #004d99;
+  box-shadow: 0 0 12px #004d99;
+}
+
+/* Responsive: stack buttons on small screens */
+@media (max-width: 768px) {
+  p-toolbar >>> ng-template[start] > div.flex,
+  p-toolbar >>> ng-template[end] > div.flex {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  
+  p-toolbar p-button {
+    min-width: auto;
+    flex: 1 1 100%;
+  }
+}

@@ -9,7 +9,11 @@ export interface Product {
   categoryId: number;
   categoryName?: string;
   attributeValues: ProductAttributeValue[];
+  productDiscountedPrice?: number; 
+  productImages: { url: string }[]; 
 }
+
+
 export interface ProductDTO {
   title: string;
   description: string;
