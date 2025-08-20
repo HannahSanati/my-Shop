@@ -11,16 +11,16 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ChipsModule } from 'primeng/chips';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { forkJoin } from 'rxjs';
-import { ProductService } from '../../services/product.service';
-import { CategoryService } from '../../services/category.service';
-import { AttributeService } from '../../services/attribute.service';
-import { AttributeType, CategoryAttributeDTO } from '../../models/attribute.model';
-import { CategoryTreeNodeDTO } from '../../models/category.model';
+import { ProductService } from '../../../services/product.service';
+import { CategoryService } from '../../../services/category.service';
+import { AttributeService } from '../../../services/attribute.service';
+import { AttributeType, CategoryAttributeDTO } from '../../../models/attribute.model';
+import { CategoryTreeNodeDTO, ProductCondition } from '../../../models/category.model';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
 import { MessageService } from 'primeng/api';
 import { SelectModule } from 'primeng/select';
-import { ProductDTO } from '../../models/product.model';
+import { ProductDTO } from '../../../models/product.model';
 
 @Component({
   selector: 'app-product-form',
@@ -228,7 +228,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
       stock: Number(this.productForm.get('stock')?.value) || 0,
       categoryId: Number(this.productForm.get('categoryId')?.value),
       attributeValues: attributes,
-      condition: 'new',
+      condition: ProductCondition.NEW,
       id: 0
     };
 

@@ -1,0 +1,92 @@
+.tree-container {
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #9ca3af; 
+  color: #bec1c5;
+}
+
+.node-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: #f8fafc;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.node-content:hover {
+  background: #e2e8f0;
+}
+
+.node-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #2e3035;
+}
+
+.node-label .pi {
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #4b5563;
+  transition: color 0.2s ease;
+}
+
+.node-label .pi:hover,
+.node-label .pi:focus {
+  color: #60a5fa;
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+.icon-btn {
+  font-size: 1rem;
+  padding: 0.25rem;
+  background: transparent;
+  border: none;
+  color: #4b5563;
+  transition: color 0.2s ease;
+}
+
+.icon-btn:hover,
+.icon-btn:focus {
+  color: #60a5fa;
+  outline: 2px solid #60a5fa; 
+  outline-offset: 2px;
+}
+
+.attributes-dialog .p-dialog-content {
+  background: #ffffff;
+  color: #1e293b;
+  border-radius: 6px;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease-in;
+  font-family: 'iran_yekan', sans-serif;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.attribute-item {
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #9ca3af; 
+}
+
+.attribute-item:last-child {
+  border-bottom: none;
+}
+
+.no-attributes {
+  font-size: 0.9rem;
+  color: #4b5563;
+  padding: 0.5rem;
+  text-align: center;
+  font-family: 'iran_yekan', sans-serif;
+}

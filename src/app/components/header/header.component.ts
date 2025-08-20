@@ -31,11 +31,11 @@ export class HeaderComponent {
           {
             label: 'افزودن دسته‌بندی جدید',
             icon: 'pi pi-plus',
-            command: () => this.navigateTo('add-category')
+            command: () => this.navigateTo('category-management')
           },
           {
             label: 'مشاهده دسته‌بندی‌ها',
-            command: () => this.navigateTo('categories')
+            command: () => this.navigateTo('tree-view')
           }
         ]
       },

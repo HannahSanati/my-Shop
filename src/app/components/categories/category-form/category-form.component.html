@@ -1,0 +1,58 @@
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="form-container">
+  <div class="form-group">
+    <label for="name">نام دسته</label>
+    <input pInputText id="name" formControlName="name" placeholder="نام دسته" aria-required="true" />
+    @if(categoryForm.get('name')?.touched && categoryForm.get('name')?.invalid) {
+      <span class="error">نام دسته اجباری است</span>
+    }
+  </div>
+  <div class="form-group">
+    <label for="description">توضیحات</label>
+    <textarea pInputTextarea id="description" formControlName="description" class="form-textarea"
+      placeholder="توضیحات"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="parentId">دسته والد</label>
+    <p-select id="parentId" formControlName="parentId" [options]="categories()" optionLabel="label" optionValue="value"
+      placeholder="انتخاب دسته والد" [showClear]="true" />
+  </div>
+  <div class="form-group">
+    <label>ویژگی جدید</label>
+    <div class="attribute-input">
+      <input pInputText formControlName="attributeName" placeholder="نام ویژگی (مثل رنگ)" aria-required="true" />
+      <p-select formControlName="attributeType" [options]="attributeTypes()" optionLabel="label" optionValue="value"
+        placeholder="نوع ویژگی" />
+      <h4>الزامی</h4>
+      <p-checkbox formControlName="required" label="اجباری" binary="true" aria-label="ویژگی اجباری"></p-checkbox>
+      <button pButton type="button" label="اضافه کردن ویژگی" class="add-attribute-btn"
+        (click)="addAttribute()"></button>
+    </div>
+    @if(categoryForm.get('attributeName')?.touched && categoryForm.get('attributeName')?.invalid) {
+      <span class="error">نام ویژگی اجباری است</span>
+    }
+  </div>
+  @if(isLoadingAttributes()) {
+    <p-progressSpinner styleClass="custom-spinner" strokeWidth="4"></p-progressSpinner>
+  }
+  @if(categoryAttributes().length || inheritedAttributes().length) {
+    <div class="attributes-list">
+      <h3>ویژگی‌های دسته</h3>
+      <ul>
+        @for(attr of inheritedAttributes(); track trackByAttribute($index, attr)) {
+          <li class="inherited">
+            {{ attr.attributeName }} ({{ attr.attributeType }}) (ارث‌بری‌شده) {{ attr.required ? '(اجباری)' : '' }}
+          </li>
+        }
+        @for(attr of categoryAttributes(); track trackByAttribute($index, attr)) {
+          <li>
+            {{ attr.attributeName }} ({{ attr.attributeType }}) {{ attr.required ? '(اجباری)' : '' }}
+            <button pButton type="button" icon="pi pi-trash" class="p-button-danger remove-attribute-btn"
+              (click)="removeAttribute($index)" aria-label="حذف ویژگی"></button>
+          </li>
+        }
+      </ul>
+    </div>
+  }
+  <button pButton type="submit" [label]="editMode() ? 'ویرایش دسته' : 'ثبت دسته'" class="submit-btn"
+    [disabled]="categoryForm.invalid || isLoadingAttributes()"></button>
+</form>

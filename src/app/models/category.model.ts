@@ -28,3 +28,4 @@ export interface CategoryTreeNodeDTO {
   children?: CategoryTreeNodeDTO[];
   attributes?: CategoryAttributeDTO[];
 }
+

@@ -1,52 +1,9 @@
-// import { Component, inject, signal } from '@angular/core';
-// import { CategoryService } from '../../services/category.service';
-// import { CategoryTreeNodeDTO } from '../../models/category.model';
-// import { TreeNode } from 'primeng/api';
-// import { CommonModule } from '@angular/common';
-// import { TreeModule } from 'primeng/tree';
-
-// @Component({
-//   selector: 'app-tree-view',
-//   imports: [CommonModule, TreeModule],
-//   templateUrl: './tree-view.component.html',
-//   styleUrl: './tree-view.component.css'
-// })
-
-// export class TreeViewComponent {
-//   categories = signal<TreeNode[]>([]);
-//   private categoryService = inject(CategoryService);
-
-//   constructor() {
-//     this.loadCategories();
-//   }
-
-//   loadCategories() {
-//     this.categoryService.getCategories().subscribe({
-//       next: (cats) => {
-//         this.categories.set(this.mapCategoriesToTreeNodes(cats));
-//       },
-//       error: (err) => {
-//         console.error('خطا در لود دسته‌بندی‌ها:', err);
-//       }
-//     });
-//   }
-
-//   mapCategoriesToTreeNodes(categories: CategoryTreeNodeDTO[]): TreeNode[] {
-//     return categories.map(category => ({
-//       key: category.key,
-//       label: category.label || 'بدون نام',
-//       data: { id: category.data.id, description: category.data.description || '' },
-//       children: category.children ? this.mapCategoriesToTreeNodes(category.children) : []
-//     }));
-//   }
-// }
-
 import { Component, inject, signal } from '@angular/core';
-import { CategoryService } from '../../services/category.service';
-import { AttributeService } from '../../services/attribute.service';
+import { CategoryService } from '../../../services/category.service';
+import { AttributeService } from '../../../services/attribute.service';
 import { TreeNode } from 'primeng/api';
-import { CategoryTreeNodeDTO } from '../../models/category.model';
-import { CategoryAttributeDTO } from '../../models/attribute.model';
+import { CategoryTreeNodeDTO } from '../../../models/category.model';
+import { CategoryAttributeDTO } from '../../../models/attribute.model';
 import { MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table'; // اگر جدول می‌خواهید
 import { CommonModule } from '@angular/common';
@@ -95,17 +52,27 @@ export class TreeViewComponent {
       key: cat.key,
       label: cat.label || 'بدون نام',
       data: { id: cat.data.id, description: cat.data.description || '', attributes: [] as CategoryAttributeDTO[] },
-      children: cat.children ? this.mapCategoriesToTreeNodes(cat.children) : []
+      children: cat.children ? this.mapCategoriesToTreeNodes(cat.children) : [],
+      expanded: false
     }));
+  }
+
+  toggleNode(node: TreeNode) {
+    node.expanded = !node.expanded;
+    if (node.expanded && !node.children?.length) {
+      this.loadNode({ node });
+    }
   }
 
   loadNode(event: any) {
     if (event.node && !event.node.children?.length) {
       this.categoryService.getCategoryChildren(event.node.data.id).subscribe({
-        next: children => event.node.children = this.mapCategoriesToTreeNodes(children),
+        next: children => {
+          event.node.children = this.mapCategoriesToTreeNodes(children);
+          this.messageService.add({ severity: 'success', summary: 'موفق', detail: 'زیرمجموعه‌ها با موفقیت لود شدند', life: 3000 });
+        },
         error: (err) => {
           console.error('خطا در لود زیرمجموعه:', err);
-          this.messageService.clear();
           this.messageService.add({ severity: 'error', summary: 'خطا', detail: 'لود زیرمجموعه انجام نشد', life: 3000 });
         }
       });
@@ -142,7 +109,6 @@ export class TreeViewComponent {
         node.data.attributes = attrs;
         this.showDialog.set(true);
         this.isLoadingAttributes = false;
-
         this.messageService.clear();
         this.messageService.add({
           severity: 'success',

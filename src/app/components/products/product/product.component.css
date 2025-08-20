@@ -1,0 +1,163 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem; 
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #d1d5db; 
+  color: #1e293b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.form-group .p-inputtext,
+.form-group .p-dropdown,
+.form-group textarea {
+  padding: 0.75rem;
+  border: 1px solid #d1d5db; 
+  border-radius: 6px;
+  background: #f8fafc; 
+  color: #1e293b;
+  font-size: 0.95rem;
+  font-family: 'iran_yekan', sans-serif;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-group .p-inputtext.p-invalid,
+.form-group .p-dropdown.p-invalid {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2); 
+}
+
+.form-group .error {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.attribute-input {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap; 
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #1e293b;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.add-attribute-btn {
+  background: #f8fafc; 
+  border: 1px solid #d1d5db; 
+  color: #1e293b;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-family: 'iran_yekan', sans-serif;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.add-attribute-btn:hover {
+  background: #60a5fa;
+  color: #ffffff;
+}
+
+.attributes-list {
+  margin-top: 0.75rem;
+}
+
+.attributes-list h3 {
+  font-size: 1.125rem; 
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.attributes-list ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.attributes-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc; 
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  color: #1e293b;
+  font-weight: 400;
+}
+
+.attributes-list li.inherited {
+  background: #e2e8f0; 
+  opacity: 0.9;
+}
+
+.remove-attribute-btn {
+  background: #ef4444;
+  border: none;
+  color: #ffffff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.remove-attribute-btn:hover {
+  background: #dc2626;
+}
+
+.submit-btn {
+  background: #f8fafc;
+  border: 1px solid #d1d5db; 
+  color: #1e293b;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: 'iran_yekan', sans-serif;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.submit-btn:disabled {
+  background: #d1d5db; 
+  color: #6b7280; 
+  opacity: 0.6;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: #60a5fa;
+  color: #ffffff;
+}
+
+.custom-spinner {
+  display: block;
+  margin: 1rem auto;
+  width: 2rem;
+  height: 2rem;
+}

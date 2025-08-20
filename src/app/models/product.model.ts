@@ -1,4 +1,6 @@
 import { AttributeType } from './attribute.model';
+import { ProductCondition } from './category.model';
+
 
 export interface Product {
   id: number;
@@ -8,20 +10,20 @@ export interface Product {
   stock: number;
   categoryId: number;
   categoryName?: string;
-  condition: 'new' | 'used';
   attributeValues: ProductAttributeValue[];
 }
 
 export interface ProductDTO {
-  id: number;  
+  id: number;
   title: string;
   description: string;
   price: number;
   stock: number;
   categoryId: number;
-  condition: 'new' | 'used';
+  condition?: ProductCondition;
   attributeValues: ProductAttributeValueDTO[];
 }
+
 
 export interface ProductAttributeValue {
   id: number;

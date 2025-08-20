@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ProductService } from '../../../services/product.service';
-import { ProductDTO } from '../../../models/product.model';
+import { ProductService } from '../../../../services/product.service';
+import { ProductDTO } from '../../../../models/product.model';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
