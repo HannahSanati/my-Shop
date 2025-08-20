@@ -1,0 +1,36 @@
+<h2>لیست کالاها</h2>
+<div class="grid">
+  @for (item of listings(); track item.id; let idx = $index) {
+  <div class="col-12 md:col-6 lg:col-4">
+    <p-card [header]="item.title" class="mb-3 shadow-2">
+      <ng-template pTemplate="content">
+        <div class="flex flex-column gap-2">
+          <span><strong>قیمت:</strong> {{ item.price | number }} تومان</span>
+          <br>
+          <span>
+            <strong>وضعیت:</strong>
+            <p-tag
+              [value]="(item.stock && item.stock > 0) ? 'نو' : 'دست دوم'"
+              [severity]="(item.stock && item.stock > 0) ? 'success' : 'warning'"
+            ></p-tag>
+          </span>
+          <br>
+          @if (item.description) {
+          <span>
+            <strong>توضیحات:</strong> {{ item.description }}
+          </span>
+          }
+          @for (attr of item.attributeValues; track attr.attributeName) {
+          <div>
+            <strong>{{ attr.attributeName }}:</strong> {{ attr.value }}
+          </div>
+          }
+        </div>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <button pButton type="button" label="حذف" class="p-button-danger" (click)="deleteProduct(item.id, idx)"></button>
+      </ng-template>
+    </p-card>
+  </div>
+  }
+</div>

@@ -1,0 +1,264 @@
+/* @import "primeicons/primeicons.css";
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebthin.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanweblight.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebregular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebmedium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebbold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebextrabold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebblack.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebextrablack.woff') format('woff');
+  font-weight: 950;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  font-family: 'iran_yekan', sans-serif !important;
+  direction: rtl;
+  background: linear-gradient(135deg, #1d3557, #457b9d);
+  color: #f1faee;
+}
+
+.p-component {
+  font-family: 'iran_yekan', sans-serif !important;
+}
+
+.p-tree {
+  background: #457b9d !important;
+  border: 1px solid #1d3557 !important;
+  border-radius: 0.75rem !important;
+  padding: 1.5rem !important;
+  color: #1d3557 !important;
+}
+
+.p-treenode-content {
+  background: #a8dadc !important;
+  border-radius: 0.5rem !important;
+  padding: 0.75rem !important;
+  color: #1d3557 !important;
+}
+
+.p-treenode-content:hover {
+  background: #1d3557 !important;
+  color: #f1faee !important;
+}
+
+.p-treenode-label {
+  font-weight: 500 !important;
+}
+
+.p-button {
+  background: #1d3557 !important;
+  border: none !important;
+  color: #f1faee !important;
+  font-family: 'iran_yekan', sans-serif !important;
+  font-weight: 500 !important;
+  border-radius: 0.5rem !important;
+  transition: background 0.3s ease, transform 0.2s ease !important;
+}
+
+.p-button:hover {
+  background: #2b4a7a !important;
+  transform: scale(1.05) !important;
+}
+
+.p-button.p-button-danger {
+  background: #e63946 !important;
+}
+
+.p-button.p-button-danger:hover {
+  background: #c62834 !important;
+}
+
+.p-inputtext {
+  background: #f1faee !important;
+  border: 1px solid #1d3557 !important;
+  color: #1d3557 !important;
+  font-family: 'iran_yekan', sans-serif !important;
+  border-radius: 0.5rem !important;
+  padding: 0.75rem !important;
+}
+
+.p-inputtext:focus {
+  border-color: #a8dadc !important;
+  box-shadow: 0 0 0 2px #a8dadc !important;
+} */
+
+
+@import "primeicons/primeicons.css";
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebthin.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanweblight.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebregular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebmedium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebbold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebextrabold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebblack.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebextrablack.woff') format('woff');
+  font-weight: 950;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  font-family: 'iran_yekan', sans-serif !important;
+  direction: rtl;
+  background: #f1f5f9; /* خاکستری-آبی خیلی روشن برای پس‌زمینه */
+  color: #1e293b; /* خاکستری-آبی تیره برای متن */
+}
+
+.p-component {
+  font-family: 'iran_yekan', sans-serif !important;
+}
+
+.p-tree {
+  background: #ffffff !important; /* سفید برای درخت */
+  border: 1px solid #d1d5db !important; /* خاکستری روشن برای حاشیه */
+  border-radius: 8px !important;
+  padding: 1rem !important;
+  color: #1e293b !important;
+}
+
+.p-treenode-content {
+  background: #f8fafc !important; /* خاکستری-آبی بسیار روشن */
+  border-radius: 6px !important;
+  padding: 0.75rem !important;
+  color: #1e293b !important;
+}
+
+.p-treenode-content:hover {
+  background: #e2e8f0 !important; /* خاکستری-آبی روشن در هاور */
+  color: #1e293b !important;
+}
+
+.p-treenode-label {
+  font-weight: 500 !important;
+}
+
+.p-button {
+  background: #f8fafc !important; /* خاکستری-آبی بسیار روشن برای دکمه‌ها */
+  border: 1px solid #d1d5db !important; /* حاشیه خاکستری روشن */
+  color: #1e293b !important; /* خاکستری-آبی تیره برای متن/آیکون */
+  font-family: 'iran_yekan', sans-serif !important;
+  font-weight: 500 !important;
+  border-radius: 6px !important;
+  transition: background 0.2s ease, color 0.2s ease !important;
+}
+
+.p-button:hover {
+  background: #60a5fa !important; /* آبی ملایم برای هاور */
+  color: #ffffff !important;
+}
+
+.p-button.p-button-danger {
+  background: #ef4444 !important; /* قرمز ملایم برای دکمه‌های خطرناک */
+  border: none !important;
+  color: #ffffff !important;
+}
+
+.p-button.p-button-danger:hover {
+  background: #dc2626 !important; /* قرمز تیره‌تر در هاور */
+}
+
+.p-inputtext {
+  background: #ffffff !important; /* سفید برای ورودی‌ها */
+  border: 1px solid #d1d5db !important; /* حاشیه خاکستری روشن */
+  color: #1e293b !important;
+  font-family: 'iran_yekan', sans-serif !important;
+  border-radius: 6px !important;
+  padding: 0.75rem !important;
+}
+
+.p-inputtext:focus {
+  border-color: #60a5fa !important; /* آبی ملایم برای فوکوس */
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2) !important; /* سایه آبی ملایم */
+}
