@@ -1,30 +1,25 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { CardModule } from 'primeng/card';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { ProductService } from '../../../services/product.service';
+import { ProductDTO } from '../../../models/product.model';
+import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
-import { ProductService } from '../../../services/product.service';
-import { Product } from '../../../models/product.model';
-
-interface Listing {
-  id: number;
-  title: string;
-  price: number;
-  condition: 'new' | 'used';
-  description?: string;
-}
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product-list',
-  imports: [CommonModule, CardModule, ButtonModule, TagModule],
+  standalone: true,
+  imports: [TableModule, ButtonModule, TagModule, CommonModule],
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  listings: Product[] = [];
-  idx: number | undefined;
+  private productService = inject(ProductService);
 
-  constructor(private productService: ProductService) {}
+  // Products signal
+  products = signal<ProductDTO[]>([]);
+
+  // Expanded row
+  expanded = signal<number | null>(null);
 
   ngOnInit() {
     this.loadProducts();
@@ -32,25 +27,30 @@ export class ProductListComponent implements OnInit {
 
   loadProducts() {
     this.productService.getProducts().subscribe({
-      next: (products) => {
-        this.listings = products;
-        console.log('Products loaded:', products);
-      },
-      error: (err) => {
-        console.error('Error loading products:', err);
-      }
+      next: (data) => this.products.set(data),
+      error: (err) => console.error(err)
     });
   }
 
-  deleteProduct(productId: number, index: number) {
-    this.productService.deleteProduct(productId).subscribe({
-      next: () => {
-        this.listings.splice(index, 1);
-        console.log('Product deleted:', productId);
-      },
-      error: (err) => {
-        console.error('Failed to delete product:', err);
-      }
+  deleteProduct(id: number) {
+    this.productService.deleteProduct(id).subscribe({
+      next: () => this.products.update(list => list.filter(p => p.id !== id)),
+      error: (err) => console.error(err)
     });
   }
+
+  toggleExpanded(id: number) {
+    this.expanded.set(this.expanded() === id ? null : id);
+  }
+
+  editProduct(product: ProductDTO) {
+    // this.productForm.patchValue({
+    //   title: product.title,
+    //   description: product.description,
+    //   price: product.price,
+    //   stock: product.stock,
+    //   condition: product.condition,
+    //   categoryId: product.categoryId
+    // });
+}
 }

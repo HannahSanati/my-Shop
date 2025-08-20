@@ -1,29 +1,30 @@
-import { AttributeType } from "./attribute.model";
+import { CategoryAttributeDTO } from './attribute.model';
+
+export enum ProductCondition {
+  NEW = 'NEW',
+  USED = 'USED',
+}
 
 export interface Category {
   id: number;
   name: string;
   description?: string;
-  parentId?: number | null; // اضافه کردن null
+  parentId?: number | null;
   children?: Category[];
 }
 
 export interface CategoryDTO {
   name: string;
   description?: string;
-  parentId?: number | null; // اضافه کردن null
+  parentId?: number | null;
+  condition?: ProductCondition;
 }
+
 
 export interface CategoryTreeNodeDTO {
   key: string;
   label: string;
-  data: { id: number; description?: string; };
+  data: { id: number; description: string; parentId: number | null };
   children?: CategoryTreeNodeDTO[];
-}
-
-export interface CategoryAttribute {
-  attributeId: number;
-  name: string;
-  attributeType: AttributeType;
-  required: boolean;
+  attributes?: CategoryAttributeDTO[];
 }

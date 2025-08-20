@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
+import { HeaderComponent } from "./components/header/header.component";
 
 @Component({
   selector: 'app-root',
@@ -11,11 +12,9 @@ import { InputTextModule } from 'primeng/inputtext';
   imports: [CommonModule, RouterOutlet,
     ButtonModule,
     CardModule,
-    InputTextModule,
-  ],
-  template: `
-    <router-outlet></router-outlet>
-  `,
+    InputTextModule, HeaderComponent],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'store';

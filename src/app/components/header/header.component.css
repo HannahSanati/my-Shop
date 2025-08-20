@@ -1,15 +1,4 @@
-/* Toolbar container styling */
-p-toolbar {
-  background-color: #ffffff;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
-  border-radius: 3rem !important; /* keep your rounded corners */
-  padding: 1rem 1rem 1rem 1.5rem !important;
-  direction: rtl; /* for right-to-left languages like Persian */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: sans-serif;
-}
+
 
 /* Start section flex container */
 p-toolbar >>> ng-template[start] > div.flex {

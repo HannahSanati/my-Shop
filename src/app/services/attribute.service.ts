@@ -1,45 +1,50 @@
-import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Attribute, CategoryAttribute, CategoryAttributeDTO, AttributeType } from '../models/attribute.model';
+import { Injectable, inject } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { BaseService } from './base.service';
+import { Attribute, CategoryAttributeDTO, AttributeType } from '../models/attribute.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AttributeService {
-  private apiUrl = 'http://192.168.225.143:8080/api/attributes';
-  private categoryAttributeApiUrl = 'http://192.168.225.143:8080/api/category-attributes';
-  private http = inject(HttpClient);
+export class AttributeService extends BaseService {
+  private readonly attributesEndpoint = 'attributes';
+  private readonly categoryAttributesEndpoint = 'category-attributes';
+  private attributeCache = new Map<number, CategoryAttributeDTO[]>();
 
   getAttributes(): Observable<Attribute[]> {
-    return this.http.get<Attribute[]>(this.apiUrl);
-  }
-
-  getAttribute(id: number): Observable<Attribute> {
-    return this.http.get<Attribute>(`${this.apiUrl}/${id}`);
+    return this.get<Attribute[]>(this.attributesEndpoint).pipe(
+      catchError(this.handleError)
+    );
   }
 
   addAttribute(attribute: Attribute): Observable<Attribute> {
-    return this.http.post<Attribute>(this.apiUrl, attribute);
+    return this.post<Attribute>(this.attributesEndpoint, attribute).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  updateAttribute(id: number, attribute: Attribute): Observable<Attribute> {
-    return this.http.put<Attribute>(`${this.apiUrl}/${id}`, attribute);
+  getCategoryAttributes(categoryId: number, forceRefresh = false): Observable<CategoryAttributeDTO[]> {
+    if (forceRefresh || !this.attributeCache.has(categoryId)) {
+      return this.get<CategoryAttributeDTO[]>(`${this.categoryAttributesEndpoint}/category/${categoryId}`).pipe(
+        tap(attributes => this.attributeCache.set(categoryId, attributes)),
+        catchError(this.handleError)
+      );
+    }
+    return of(this.attributeCache.get(categoryId)!);
   }
 
-  deleteAttribute(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-
-  addCategoryAttribute(categoryAttribute: CategoryAttributeDTO): Observable<CategoryAttribute> {
-    return this.http.post<CategoryAttribute>(this.categoryAttributeApiUrl, categoryAttribute);
-  }
-
-  getCategoryAttributes(categoryId: number): Observable<CategoryAttribute[]> {
-    return this.http.get<CategoryAttribute[]>(`${this.categoryAttributeApiUrl}/category/${categoryId}`);
+  addCategoryAttribute(categoryAttribute: CategoryAttributeDTO): Observable<CategoryAttributeDTO> {
+    return this.post<CategoryAttributeDTO>(this.categoryAttributesEndpoint, categoryAttribute).pipe(
+      tap(() => this.attributeCache.clear()),
+      catchError(this.handleError)
+    );
   }
 
   deleteCategoryAttribute(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.categoryAttributeApiUrl}/${id}`);
+    return this.delete<void>(`${this.categoryAttributesEndpoint}/${id}`).pipe(
+      tap(() => this.attributeCache.clear()),
+      catchError(this.handleError)
+    );
   }
 }

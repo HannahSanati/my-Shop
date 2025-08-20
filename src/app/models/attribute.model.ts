@@ -12,17 +12,13 @@ export interface Attribute {
   type: AttributeType;
 }
 
-export interface CategoryAttribute {
-  id?: number;
-  categoryId?: number;
-  attributeId: number;
-  attributeName?: string;
-  attributeType?: AttributeType;
-  required: boolean;
-}
-
 export interface CategoryAttributeDTO {
+  id: number;
   categoryId: number;
   attributeId: number;
+  attributeName: string;
+  attributeType: AttributeType;
   required: boolean;
+  categoryName: string;
+  inherited: boolean;
 }

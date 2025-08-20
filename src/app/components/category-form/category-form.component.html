@@ -1,19 +1,21 @@
 <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="form-container">
-  <div>Attributes count: {{ categoryAttributes().length }}</div>
-
   <div class="form-group">
     <label for="name">نام دسته</label>
     <input pInputText id="name" formControlName="name" placeholder="نام دسته" />
-    <span class="error" *ngIf="categoryForm.get('name')?.touched && categoryForm.get('name')?.invalid">
-      نام دسته اجباری است
-    </span>
+    @if(categoryForm.get('name')?.touched && categoryForm.get('name')?.invalid){
+    <span class="error">نام دسته اجباری است</span>
+    }
   </div>
-
   <div class="form-group">
     <label for="description">توضیحات</label>
-    <textarea pInputTextarea id="description" formControlName="description" class="form-textarea" placeholder="توضیحات"></textarea>
+    <textarea
+      pInputTextarea
+      id="description"
+      formControlName="description"
+      class="form-textarea"
+      placeholder="توضیحات"
+    ></textarea>
   </div>
-
   <div class="form-group">
     <label for="parentId">دسته والد</label>
     <p-select
@@ -23,13 +25,18 @@
       optionLabel="label"
       optionValue="value"
       placeholder="انتخاب دسته والد"
+      [showClear]="true"
     />
   </div>
 
   <div class="form-group">
     <label>ویژگی جدید</label>
     <div class="attribute-input">
-      <input pInputText formControlName="attributeName" placeholder="نام ویژگی (مثل رنگ)" />
+      <input
+        pInputText
+        formControlName="attributeName"
+        placeholder="نام ویژگی (مثل رنگ)"
+      />
       <p-select
         formControlName="attributeType"
         [options]="attributeTypes()"
@@ -37,21 +44,53 @@
         optionValue="value"
         placeholder="نوع ویژگی"
       />
-      <h4>اجباری</h4>
-      <p-checkbox formControlName="required" label="اجباری" binary="true"></p-checkbox>
-      <button pButton type="button" label="اضافه کردن ویژگی" class="add-attribute-btn" (click)="addAttribute()"></button>
+      <h4>الزامی</h4>
+      <p-checkbox
+        formControlName="required"
+        label="اجباری"
+        binary="true"
+      ></p-checkbox>
+      <button
+        pButton
+        type="button"
+        label="اضافه کردن ویژگی"
+        class="add-attribute-btn"
+        (click)="addAttribute()"
+      ></button>
     </div>
   </div>
-
-  <div class="attributes-list" *ngIf="categoryAttributes().length">
+  @if(categoryAttributes().length || inheritedAttributes().length){
+  <div class="attributes-list">
     <h3>ویژگی‌های دسته</h3>
     <ul>
-      <li *ngFor="let attr of categoryAttributes(); let i = index">
-        {{ attr.attributeName }} ({{ attr.attributeType }}) {{ attr.required ? '(اجباری)' : '' }}
-        <button pButton type="button" icon="pi pi-trash" class="p-button-danger remove-attribute-btn" (click)="removeAttribute(i)"></button>
+      @for(attr of inheritedAttributes(); track attr; let i = $index){
+      <li class="inherited">
+        {{ attr.attributeName }} ({{ attr.attributeType }}) (ارث‌بری‌شده)
+        {{ attr.required ? "(اجباری)" : "" }}
       </li>
+      } @for(attr of categoryAttributes(); track attr; let i = $index){
+      <li>
+        {{ attr.attributeName }} ({{ attr.attributeType }})
+        {{ attr.required ? "(اجباری)" : "" }}
+        <button
+          pButton
+          type="button"
+          icon="pi pi-trash"
+          class="p-button-danger remove-attribute-btn"
+          (click)="removeAttribute(i)"
+        ></button>
+      </li>
+      }
     </ul>
   </div>
-
-  <button pButton type="submit" [label]="editMode() ? 'ویرایش دسته' : 'ثبت دسته'" class="submit-btn" [disabled]="categoryForm.invalid"></button>
+  }
+  <button
+    pButton
+    type="submit"
+    [label]="editMode() ? 'ویرایش دسته' : 'ثبت دسته'"
+    class="submit-btn"
+    [disabled]="categoryForm.invalid"
+  ></button>
 </form>
+
+<app-category-tree></app-category-tree>

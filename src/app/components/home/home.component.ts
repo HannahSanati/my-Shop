@@ -6,12 +6,10 @@ import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
 import { CommonModule } from '@angular/common';  
 import { Router } from '@angular/router';
-import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from "../header/header.component";
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, InputTextModule, ButtonModule, CardModule, RouterOutlet, HeaderComponent],  
+  imports: [CommonModule, InputTextModule, ButtonModule, CardModule],  
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],  
 })

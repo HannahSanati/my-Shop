@@ -6,6 +6,13 @@
   font-weight: 100;
   font-style: normal;
 }
+@font-face {
+  font-family: 'IranYekanWebBold';
+  src: url('assets/fonts/iranyekanwebbold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
 
 @font-face {
   font-family: 'iran_yekan';

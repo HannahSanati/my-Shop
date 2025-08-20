@@ -8,20 +8,21 @@ export interface Product {
   stock: number;
   categoryId: number;
   categoryName?: string;
+  condition: 'new' | 'used';
   attributeValues: ProductAttributeValue[];
-  productDiscountedPrice?: number; 
-  productImages: { url: string }[]; 
 }
 
-
 export interface ProductDTO {
+  id: number;  
   title: string;
   description: string;
   price: number;
   stock: number;
   categoryId: number;
+  condition: 'new' | 'used';
   attributeValues: ProductAttributeValueDTO[];
 }
+
 export interface ProductAttributeValue {
   id: number;
   attributeId: number;
@@ -29,13 +30,8 @@ export interface ProductAttributeValue {
   attributeType: AttributeType;
   value: string;
 }
+
 export interface ProductAttributeValueDTO {
   attributeId: number;
   value: string;
-}
-export interface CategoryAttribute {
-  attributeId: number;
-  attributeName: string;
-  attributeType: AttributeType;
-  required: boolean;
 }

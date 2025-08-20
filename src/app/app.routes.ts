@@ -28,8 +28,8 @@ export const routes: Routes = [
   {
     path: 'categories',
     loadComponent: () =>
-    import('./components/category-tree/category-tree.component')
-        .then(c => c.CategoryTreeComponent),
+    import('./components/tree-view/tree-view.component')
+        .then(c => c.TreeViewComponent),
   },
   {
     path: 'add-product',
