@@ -1,9 +1,14 @@
 import { CategoryAttributeDTO } from './attribute.model';
 
 export enum ProductCondition {
-  NEW = 'NEW',
-  USED = 'USED',
+  NEW = 'new',
+  USED = 'used',
 }
+
+export const ProductConditionTranslate = {
+  [ProductCondition.NEW] : 'نو',
+  [ProductCondition.USED]: 'دست دوم'
+} as const 
 
 export interface Category {
   id: number;

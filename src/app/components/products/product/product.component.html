@@ -1,5 +1,7 @@
+<div class="page-container">
+  <div class="container">
 <p-card header="فرم افزودن محصول" class="p-mb-3"></p-card>
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container" class="p-fluid p-formgrid p-grid">
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container p-fluid p-formgrid p-grid">
   <div class="form-group">
     <label for="title">عنوان محصول</label>
     <input pInputText id="title" formControlName="title" placeholder="عنوان را وارد کنید" />
@@ -26,7 +28,25 @@
     <span class="error">موجودی باید عدد غیرمنفی باشد</span>
     }
   </div>
-  <div class="p-field p-col-12">
+  
+  <div class="form-group">
+    <label for="categoryId">دسته‌بندی</label>
+    <p-treeSelect
+      id="categoryId"
+      formControlName="categoryId"
+      [options]="categories()"
+      placeholder="انتخاب دسته‌بندی"
+      display="chip"
+      (onNodeSelect)="onCategorySelect($event)"
+      selectionMode="single"
+      [filter]="true"
+    ></p-treeSelect>
+
+    @if (productForm.get('categoryId')?.touched && productForm.get('categoryId')?.invalid) {
+    <span class="error">دسته‌بندی اجباری است</span>
+    }
+  </div>
+  <div class="form-group">
     <label>وضعیت</label>
     <div class="p-formgroup-inline">
       <div class="p-field-radiobutton">
@@ -49,24 +69,7 @@
       </div>
     </div>
   </div>
-  
-  <div class="form-group">
-    <label for="categoryId">دسته‌بندی</label>
-    <p-treeSelect
-      id="categoryId"
-      formControlName="categoryId"
-      [options]="categories()"
-      placeholder="انتخاب دسته‌بندی"
-      display="chip"
-      (onNodeSelect)="onCategorySelect($event)"
-      selectionMode="single"
-      [filter]="true"
-    ></p-treeSelect>
 
-    @if (productForm.get('categoryId')?.touched && productForm.get('categoryId')?.invalid) {
-    <span class="error">دسته‌بندی اجباری است</span>
-    }
-  </div>
   @if (categoryAttributes().length) {
   <div class="form-group">
     <label>ویژگی‌های دسته</label>
@@ -113,7 +116,8 @@
   }
   <button pButton type="submit" label="ثبت محصول" class="submit-btn" [disabled]="productForm.invalid"></button>
 </form>
-
+</div>
+</div>
 
 
 

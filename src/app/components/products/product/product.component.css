@@ -1,163 +1,110 @@
-.form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem; 
+
+body {
+  margin: 0;
+  font-family: 'iran_yekan', sans-serif !important;
+  direction: rtl;
+  background: var(--page-bg);
+  color: var(--text-color);
+}
+.page-container {
+  min-height: 100vh;
   padding: 1.5rem;
-  background: #ffffff;
-  border-radius: 8px;
-  border: 1px solid #d1d5db; 
+  background: #f1f5f9;
+  font-family: "iran_yekan", sans-serif;
   color: #1e293b;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
+}
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
 }
 
+p-card {
+  background: var(--card-bg) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+  border-radius: 0.75rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.form-container {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #cbd5e1; 
+}
 .form-group {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+    flex-direction: column;
+    margin-bottom: 1.5rem;  
 }
-
 .form-group label {
-  font-size: 0.875rem;
+  margin-bottom: 0.75rem; 
   font-weight: 500;
-  color: #1e293b;
+  color: var(--text-color);
+}
+input[pInputText],
+textarea[pInputTextarea],
+p-chips {
+  background-color: #f8fafc !important; 
+  border: 1px solid #cbd5e1 !important; 
+  border-radius: 0.5rem !important;
+  padding: 0.5rem !important;
+  color: #1e293b !important; 
+  font-family: 'iran_yekan', sans-serif !important;
 }
 
-.form-group .p-inputtext,
-.form-group .p-dropdown,
-.form-group textarea {
-  padding: 0.75rem;
-  border: 1px solid #d1d5db; 
-  border-radius: 6px;
-  background: #f8fafc; 
-  color: #1e293b;
-  font-size: 0.95rem;
-  font-family: 'iran_yekan', sans-serif;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+input[pInputText]:focus,
+textarea[pInputTextarea]:focus,
+p-inputNumber:focus,
+p-chips:focus {
+  border-color: #3b82f6 !important; 
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.2) !important;
 }
-
-.form-textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
-.form-group .p-inputtext.p-invalid,
-.form-group .p-dropdown.p-invalid {
-  border-color: #ef4444;
-  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2); 
-}
-
-.form-group .error {
-  color: #ef4444;
-  font-size: 0.75rem;
+.error {
+  color: red;
+  font-size: 0.85rem;
   margin-top: 0.25rem;
 }
 
+.submit-btn, .p-button {
+  background: var(--accent-color) !important;
+  color: var(--text-color) !important;
+  border-radius: 0.5rem !important;
+  border: 1px solid var(--border-color) !important;
+  font-weight: 500 !important;
+  transition: background 0.3s ease, transform 0.2s ease !important;
+  display: flex;
+  justify-content: center;
+}
+
+.submit-btn:hover, .p-button:hover {
+  background: #e8e8e8 !important;
+  transform: scale(1.03) !important;
+}
+.p-formgroup-inline {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.p-field-radiobutton, .checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 .attribute-input {
   display: flex;
-  gap: 0.75rem;
-  align-items: center;
-  flex-wrap: wrap; 
-}
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #1e293b;
-  font-size: 0.875rem;
-  font-weight: 400;
-}
-
-.add-attribute-btn {
-  background: #f8fafc; 
-  border: 1px solid #d1d5db; 
-  color: #1e293b;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-family: 'iran_yekan', sans-serif;
-  font-weight: 500;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.add-attribute-btn:hover {
-  background: #60a5fa;
-  color: #ffffff;
-}
-
-.attributes-list {
-  margin-top: 0.75rem;
-}
-
-.attributes-list h3 {
-  font-size: 1.125rem; 
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 0.5rem;
-}
-
-.attributes-list ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-.attributes-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #f8fafc; 
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  color: #1e293b;
-  font-weight: 400;
+.attribute-input label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
 }
-
-.attributes-list li.inherited {
-  background: #e2e8f0; 
-  opacity: 0.9;
-}
-
-.remove-attribute-btn {
-  background: #ef4444;
-  border: none;
-  color: #ffffff;
-  padding: 0.25rem 0.75rem;
-  border-radius: 6px;
-  transition: background 0.2s ease;
-}
-
-.remove-attribute-btn:hover {
-  background: #dc2626;
-}
-
-.submit-btn {
-  background: #f8fafc;
-  border: 1px solid #d1d5db; 
-  color: #1e293b;
-  padding: 0.75rem;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  font-family: 'iran_yekan', sans-serif;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.submit-btn:disabled {
-  background: #d1d5db; 
-  color: #6b7280; 
-  opacity: 0.6;
-}
-
-.submit-btn:hover:not(:disabled) {
-  background: #60a5fa;
-  color: #ffffff;
-}
-
-.custom-spinner {
-  display: block;
-  margin: 1rem auto;
-  width: 2rem;
-  height: 2rem;
+@media (max-width: 768px) {
+  .p-formgroup-inline {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }

@@ -12,12 +12,12 @@
 
   <ng-template pTemplate="body" let-product>
     <tr>
-      <td>{{product.title}}</td>
+      <td>{{product.title}}</td>  
       <td>{{product.categoryName}}</td>
-      <td>{{product.price}}</td>
+      <td>{{product.price | number }}</td>
       <td>{{product.stock}}</td>
       <td>
-        <p-tag [value]="product.condition"
+        <p-tag [value]="product.condition ? (product.condition === 'new' ? 'نو' : 'دست دوم') : ' - '" 
                [severity]="product.condition === 'new' ? 'success' : 'warning'">
         </p-tag>
       </td>
@@ -48,91 +48,3 @@
   </ng-template>
 </p-table>
 
-
-<!--     PRODUCT HTML 
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
-  <div class="form-group">
-    <label for="title">عنوان محصول</label>
-    <input pInputText id="title" formControlName="title" placeholder="عنوان محصول" />
-    @if (productForm.get('title')?.touched && productForm.get('title')?.invalid) {
-    <span class="error">عنوان اجباری است</span>
-    }
-  </div>
-  <div class="form-group">
-    <label for="description">توضیحات</label>
-    <textarea pInputTextarea id="description" formControlName="description" class="form-textarea"
-      placeholder="توضیحات"></textarea>
-  </div>
-  <div class="form-group">
-    <label for="price">قیمت</label>
-    <p-inputNumber id="price" formControlName="price" mode="decimal"></p-inputNumber>
-    @if (productForm.get('price')?.touched && productForm.get('price')?.invalid) {
-    <span class="error">قیمت باید عدد مثبت باشد</span>
-    }
-  </div>
-  <div class="form-group">
-    <label for="stock">موجودی</label>
-    <p-inputNumber id="stock" formControlName="stock" [showButtons]="true" [min]="0"></p-inputNumber>
-    @if (productForm.get('stock')?.touched && productForm.get('stock')?.invalid) {
-    <span class="error">موجودی باید عدد غیرمنفی باشد</span>
-    }
-  </div>
-  <div class="form-group">
-    <label for="categoryId">دسته‌بندی</label>
-    <p-select id="categoryId" formControlName="categoryId" [options]="mappedCategories()" optionLabel="name"
-      optionValue="id" placeholder="انتخاب دسته" [showClear]="true"></p-select>
-    @if (productForm.get('categoryId')?.touched && productForm.get('categoryId')?.invalid) {
-    <span class="error">دسته‌بندی اجباری است</span>
-    }
-  </div>
-  @if (categoryAttributes().length) {
-  <div class="form-group">
-    <label>ویژگی‌های دسته</label>
-    @for (attr of categoryAttributes(); track attr; let i = $index) {
-    <div class="attribute-input">
-      <label for="attr-{{ i }}">{{ attr.attributeName }} {{ attr.required ? '*' : '' }}</label>
-      @switch (attr.attributeType) {
-      @case ('STRING') {
-      <input pInputText id="attr-{{ i }}" [formControl]="getValueControl(i)"
-        [placeholder]="'مقدار (مثل ' + (attr.attributeName === 'رنگ' ? 'قرمز' : 'متن') + ')'" />
-      }
-      @case ('NUMBER') {
-      <p-inputNumber id="attr-{{ i }}" [formControl]="getValueControl(i)" [showButtons]="true" [min]="0"
-        [placeholder]="'مقدار (مثل ' + (attr.attributeName === 'وزن' ? '۱.۵' : 'عدد') + ')'"></p-inputNumber>
-      }
-      @case ('BOOLEAN') {
-      <div class="checkbox-group">
-        <p-checkbox [formControl]="getValueControl(i)" binary="true" inputId="attr-{{ i }}"></p-checkbox>
-        <label for="attr-{{ i }}">{{ attr.attributeName }}</label>
-      </div>
-      }
-      @case ('SELECT') {
-      <p-select id="attr-{{ i }}" [formControl]="getValueControl(i)"
-        [options]="[{ label: 'گزینه ۱', value: 'گزینه ۱' }, { label: 'گزینه ۲', value: 'گزینه ۲' }]"
-        placeholder="انتخاب مقدار"></p-select>
-      }
-      @case ('MULTISELECT') {
-      <p-multiSelect id="attr-{{ i }}" [formControl]="getValueControl(i)"
-        [options]="[{ label: 'گزینه ۱', value: 'گزینه ۱' }, { label: 'گزینه ۲', value: 'گزینه ۲' }]"
-        placeholder="انتخاب مقادیر" [maxSelectedLabels]="2"></p-multiSelect>
-      }
-      }
-      @if (getValueControl(i).touched && getValueControl(i).invalid) {
-      <span class="error">{{ attr.attributeName }} اجباری است</span>
-      }
-    </div>
-    }
-  </div>
-  }
-  <button pButton type="submit" label="ثبت محصول" class="submit-btn" [disabled]="productForm.invalid"></button>
-</form> -->
-
-
-
-<!-- <div class="p-field">
-  <label for="file">تصویر محصول</label>
-  <input id="file" type="file" (change)="onFileBrowse($event)" class="p-inputtext p-component" />
-</div> -->
-
-
-    <!--  -->

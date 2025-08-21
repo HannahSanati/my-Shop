@@ -64,10 +64,16 @@ export class ProductFormComponent implements OnInit, OnChanges {
       description: [''],
       price: [0, [Validators.required, Validators.min(0)]],
       stock: [0, [Validators.required, Validators.min(0)]],
-      categoryId: [null, Validators.required],
+      categoryId: [null],
       condition: ['new', Validators.required],
       attributeValues: this.fb.array([]),
     });
+    
+    // this.productForm.valueChanges.subscribe({
+    //   next: (s)=>{
+    //     console.log(s); 
+    //   }
+    // })
 
     this.categoryService.getCategories().subscribe({
       next: (cats) => {
@@ -228,7 +234,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
       stock: Number(this.productForm.get('stock')?.value) || 0,
       categoryId: Number(this.productForm.get('categoryId')?.value),
       attributeValues: attributes,
-      condition: ProductCondition.NEW,
+      condition: this.productForm.get('condition')?.value ?? ProductCondition.NEW,
       id: 0
     };
 

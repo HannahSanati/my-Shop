@@ -1,0 +1,27 @@
+<div class="card-container">
+    @for (product of products(); track product.id) {
+      <p-card class="product-card">
+          <ng-template #header>
+              <img 
+                alt="{{product.title}}" 
+                class="card-image" 
+                src="https://primefaces.org/cdn/primeng/images/card-ng.jpg" />
+          </ng-template>
+  
+          <ng-template #title> {{product.title}}</ng-template>
+          <ng-template #subtitle> {{product.categoryName}}</ng-template>
+  
+          <p>توضیحات: {{product.description || '-'}}</p>
+          <p>قیمت: {{product.price | number }}</p>
+          <p>موجودی: {{product.stock}}</p>
+  
+          <ng-template #footer>
+              <div class="button-group">
+                  <p-button label="Show Detail" severity="secondary" class="button" [outlined]="true" />
+                  <p-button label="Buy" class="button" />
+              </div>
+          </ng-template>      
+      </p-card>
+    }
+  </div>
+  

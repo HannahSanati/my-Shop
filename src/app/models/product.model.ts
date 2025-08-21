@@ -21,7 +21,7 @@ export interface ProductDTO {
   stock: number;
   categoryId: number;
   condition?: ProductCondition;
-  attributeValues: ProductAttributeValueDTO[];
+  attributeValues: any[];
 }
 
 

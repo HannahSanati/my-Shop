@@ -62,13 +62,19 @@
   font-weight: 950;
   font-style: normal;
 }
+:root {
+  --primary-bg: #ffffff;        /* main background */
+  --secondary-bg: #f5f5f5;      /* card, tree node backgrounds */
+  --primary-color: #1d1d1d;     /* text color */
+  --accent-color: #c0c0c0;      /* borders, subtle highlights */
+}
 
 body {
   margin: 0;
   font-family: 'iran_yekan', sans-serif !important;
   direction: rtl;
-  background: linear-gradient(135deg, #1d3557, #457b9d);
-  color: #f1faee;
+  background: var(--primary-bg);
+  color: var(--primary-color);
 }
 
 /* بازنویسی استایل‌های PrimeNG */
@@ -76,34 +82,36 @@ body {
   font-family: 'iran_yekan', sans-serif !important;
 }
 
+
 .p-tree {
-  background: #457b9d !important;
-  border: 1px solid #1d3557 !important;
+  background: var(--secondary-bg) !important;
+  border: 1px solid var(--accent-color) !important;
   border-radius: 0.75rem !important;
   padding: 1.5rem !important;
-  color: #1d3557 !important;
+  color: var(--primary-color) !important;
 }
 
 .p-treenode-content {
-  background: #a8dadc !important;
+  background: var(--primary-bg) !important;
   border-radius: 0.5rem !important;
   padding: 0.75rem !important;
-  color: #1d3557 !important;
+  color: var(--primary-color) !important;
 }
 
 .p-treenode-content:hover {
-  background: #1d3557 !important;
-  color: #f1faee !important;
+  background: var(--accent-color) !important;
+  color: var(--primary-color) !important;
 }
 
 .p-treenode-label {
   font-weight: 500 !important;
 }
 
+
 .p-button {
-  background: #1d3557 !important;
+  background: var(--accent-color) !important;
   border: none !important;
-  color: #f1faee !important;
+  color: var(--primary-color) !important;
   font-family: 'iran_yekan', sans-serif !important;
   font-weight: 500 !important;
   border-radius: 0.5rem !important;
@@ -111,7 +119,7 @@ body {
 }
 
 .p-button:hover {
-  background: #2b4a7a !important;
+  background: #b0b0b0 !important; 
   transform: scale(1.05) !important;
 }
 
@@ -123,16 +131,17 @@ body {
   background: #c62834 !important;
 }
 
+/* Inputs */
 .p-inputtext {
-  background: #f1faee !important;
-  border: 1px solid #1d3557 !important;
-  color: #1d3557 !important;
+  background: var(--secondary-bg) !important;
+  border: 1px solid var(--accent-color) !important;
+  color: var(--primary-color) !important;
   font-family: 'iran_yekan', sans-serif !important;
   border-radius: 0.5rem !important;
   padding: 0.75rem !important;
 }
 
 .p-inputtext:focus {
-  border-color: #a8dadc !important;
-  box-shadow: 0 0 0 2px #a8dadc !important;
+  border-color: #b0b0b0 !important;
+  box-shadow: 0 0 0 2px #b0b0b0 !important;
 }
